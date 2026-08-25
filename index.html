@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CSB Social</title>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
@@ -18,8 +18,8 @@
 }
 
 body{
-  font-family:Arial, sans-serif;
-  background:#050b09;
+  font-family:Arial,sans-serif;
+  background:#020806;
   color:#fff;
 }
 
@@ -31,7 +31,7 @@ button{
   cursor:pointer;
 }
 
-/* LOGIN */
+/* AUTH */
 
 #authPage{
   min-height:100vh;
@@ -49,7 +49,7 @@ button{
   padding:30px;
   border:1px solid #08754c;
   border-radius:25px;
-  background:rgba(3,18,13,.95);
+  background:rgba(3,18,13,.96);
   box-shadow:0 0 35px rgba(0,255,140,.18);
 }
 
@@ -80,25 +80,16 @@ button{
   font-size:16px;
 }
 
-.authBox input:focus{
-  border-color:#00ff88;
-  box-shadow:0 0 10px rgba(0,255,136,.15);
-}
-
 .mainBtn{
   width:100%;
-  padding:15px;
-  margin-top:12px;
+  padding:14px;
+  margin-top:10px;
   border:0;
   border-radius:12px;
   background:#00e878;
   color:#001b0e;
   font-size:16px;
   font-weight:bold;
-}
-
-.mainBtn:hover{
-  background:#00ff91;
 }
 
 .switch{
@@ -131,56 +122,66 @@ button{
   height:65px;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 18px;
-  background:rgba(2,12,8,.96);
+  padding:0 15px;
+  background:rgba(2,12,8,.97);
   border-bottom:1px solid #0b4c32;
   backdrop-filter:blur(10px);
 }
 
 .brand{
   color:#00ff88;
-  font-size:22px;
+  font-size:21px;
   font-weight:bold;
   text-shadow:0 0 12px rgba(0,255,136,.5);
 }
 
 .topActions{
   display:flex;
-  gap:8px;
+  gap:7px;
 }
 
 .iconBtn{
   border:1px solid #164d39;
   background:#07130f;
   color:#00ff88;
-  padding:9px 13px;
+  padding:9px 11px;
   border-radius:10px;
+}
+
+.iconBtn:hover{
+  background:#0b2b1e;
 }
 
 .container{
   width:100%;
   max-width:720px;
   margin:auto;
-  padding:20px 14px 80px;
+  padding:20px 12px 80px;
 }
 
 /* PROFILE */
 
 .profile{
-  padding:22px;
+  padding:20px;
   margin-bottom:18px;
   border:1px solid #104e37;
   border-radius:20px;
   background:#06120e;
 }
 
+.profileTop{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
 .avatar{
-  width:62px;
-  height:62px;
+  width:65px;
+  height:65px;
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -189,7 +190,10 @@ button{
   color:#001b0e;
   font-size:25px;
   font-weight:bold;
-  margin-bottom:12px;
+}
+
+.profileInfo{
+  flex:1;
 }
 
 .profileName{
@@ -199,11 +203,37 @@ button{
 
 .profileEmail{
   color:#7f998f;
-  font-size:14px;
+  font-size:13px;
   margin-top:4px;
 }
 
-/* CREATE POST */
+.stats{
+  display:flex;
+  gap:25px;
+  margin-top:18px;
+}
+
+.stat{
+  color:#9ab2a8;
+  font-size:14px;
+}
+
+.stat b{
+  color:#00ff88;
+  font-size:18px;
+}
+
+.editProfileBtn{
+  margin-top:15px;
+  width:100%;
+  padding:11px;
+  border-radius:10px;
+  border:1px solid #176043;
+  background:#07130f;
+  color:#00ff88;
+}
+
+/* CREATE */
 
 .create{
   padding:18px;
@@ -233,11 +263,6 @@ button{
 .create textarea{
   min-height:110px;
   resize:vertical;
-}
-
-.create input:focus,
-.create textarea:focus{
-  border-color:#00ff88;
 }
 
 /* POSTS */
@@ -271,12 +296,24 @@ button{
 
 .postUser{
   font-weight:bold;
+  color:#fff;
 }
 
 .postTime{
   color:#71877e;
   font-size:12px;
   margin-top:3px;
+}
+
+.postMenu{
+  margin-left:auto;
+}
+
+.menuBtn{
+  border:0;
+  background:transparent;
+  color:#8da99c;
+  font-size:20px;
 }
 
 .postBody{
@@ -303,19 +340,32 @@ button{
 
 .action{
   flex:1;
-  padding:13px;
+  padding:13px 5px;
   border:0;
   background:transparent;
   color:#91aaa0;
 }
 
-.action:hover{
+.action:hover,
+.action.liked{
+  color:#00ff88;
   background:#092219;
+}
+
+/* FOLLOW */
+
+.followBtn{
+  margin-left:auto;
+  padding:7px 12px;
+  border-radius:9px;
+  border:1px solid #00d875;
+  background:transparent;
   color:#00ff88;
 }
 
-.action.liked{
-  color:#00ff88;
+.followBtn.following{
+  background:#00d875;
+  color:#001b0e;
 }
 
 /* COMMENTS */
@@ -359,6 +409,109 @@ button{
   font-weight:bold;
 }
 
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.75);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modalBox{
+  width:100%;
+  max-width:450px;
+  background:#06120e;
+  border:1px solid #176043;
+  border-radius:20px;
+  padding:20px;
+}
+
+.modalBox h2{
+  color:#00ff88;
+  margin-bottom:15px;
+}
+
+.modalBox input,
+.modalBox textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  background:#020906;
+  border:1px solid #164d39;
+  border-radius:10px;
+  color:white;
+  outline:none;
+}
+
+.modalActions{
+  display:flex;
+  gap:8px;
+}
+
+.modalActions button{
+  flex:1;
+  padding:12px;
+  border:0;
+  border-radius:10px;
+}
+
+.saveBtn{
+  background:#00d875;
+  color:#001b0e;
+  font-weight:bold;
+}
+
+.cancelBtn{
+  background:#18251f;
+  color:white;
+}
+
+.deleteBtn{
+  background:#541c1c;
+  color:#ff8b8b;
+}
+
+/* NOTIFICATION */
+
+.notificationPanel{
+  display:none;
+  position:fixed;
+  top:70px;
+  right:10px;
+  width:310px;
+  max-height:420px;
+  overflow:auto;
+  z-index:80;
+  background:#06120e;
+  border:1px solid #176043;
+  border-radius:15px;
+  box-shadow:0 10px 35px #000;
+}
+
+.notificationPanel h3{
+  padding:15px;
+  color:#00ff88;
+  border-bottom:1px solid #104e37;
+}
+
+.notification{
+  padding:12px 15px;
+  border-bottom:1px solid #0d3022;
+  color:#c7d6d0;
+  font-size:14px;
+}
+
+.notification small{
+  display:block;
+  color:#6f887d;
+  margin-top:4px;
+}
+
 /* EMPTY */
 
 .empty{
@@ -373,20 +526,21 @@ button{
   color:#00ff88;
 }
 
-/* MOBILE */
-
 @media(max-width:500px){
-  .authBox{
-    padding:23px;
-  }
 
   .brand{
-    font-size:19px;
+    font-size:18px;
   }
 
   .container{
-    padding-left:9px;
-    padding-right:9px;
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .notificationPanel{
+    left:10px;
+    right:10px;
+    width:auto;
   }
 }
 </style>
@@ -394,147 +548,267 @@ button{
 
 <body>
 
-<!-- ================= AUTH ================= -->
+<!-- AUTH -->
 
 <section id="authPage">
 
-  <div class="authBox">
+<div class="authBox">
 
-    <div class="logo">🛡️ CSB Social</div>
-    <div class="subtitle">Cyber Sentinel Bangladesh</div>
+<div class="logo">🛡️ CSB Social</div>
 
-    <div id="loginForm">
+<div class="subtitle">
+Cyber Sentinel Bangladesh
+</div>
 
-      <input id="loginEmail"
-             type="email"
-             placeholder="Email">
+<div id="loginForm">
 
-      <input id="loginPassword"
-             type="password"
-             placeholder="Password">
+<input id="loginEmail"
+type="email"
+placeholder="Email">
 
-      <button class="mainBtn" onclick="login()">
-        Login
-      </button>
+<input id="loginPassword"
+type="password"
+placeholder="Password">
 
-      <div class="switch">
-        নতুন account?
-        <span onclick="showSignup()">Sign Up</span>
-      </div>
+<button class="mainBtn" onclick="login()">
+Login
+</button>
 
-    </div>
+<div class="switch">
+নতুন account?
+<span onclick="showSignup()">Sign Up</span>
+</div>
 
+</div>
 
-    <div id="signupForm" style="display:none">
+<div id="signupForm" style="display:none">
 
-      <input id="signupName"
-             type="text"
-             placeholder="Your name">
+<input id="signupName"
+type="text"
+placeholder="Your name">
 
-      <input id="signupEmail"
-             type="email"
-             placeholder="Email">
+<input id="signupEmail"
+type="email"
+placeholder="Email">
 
-      <input id="signupPassword"
-             type="password"
-             placeholder="Password (minimum 6 characters)">
+<input id="signupPassword"
+type="password"
+placeholder="Password (minimum 6 characters)">
 
-      <button class="mainBtn" onclick="signup()">
-        Create Account
-      </button>
+<button class="mainBtn" onclick="signup()">
+Create Account
+</button>
 
-      <div class="switch">
-        আগে থেকেই account আছে?
-        <span onclick="showLogin()">Login</span>
-      </div>
+<div class="switch">
+আগে থেকেই account আছে?
+<span onclick="showLogin()">Login</span>
+</div>
 
-    </div>
+</div>
 
-    <div id="authError" class="error"></div>
+<div id="authError" class="error"></div>
 
-  </div>
+</div>
 
 </section>
 
 
-<!-- ================= APP ================= -->
+<!-- APP -->
 
 <section id="app">
 
-  <header class="topbar">
+<header class="topbar">
 
-    <div class="brand">
-      🛡️ CSB Social
-    </div>
+<div class="brand">
+🛡️ CSB Social
+</div>
 
-    <div class="topActions">
-      <button class="iconBtn" onclick="logout()">
-        Logout
-      </button>
-    </div>
+<div class="topActions">
 
-  </header>
+<button class="iconBtn" onclick="toggleNotifications()">
+🔔 <span id="notificationCount">0</span>
+</button>
 
+<button class="iconBtn" onclick="logout()">
+Logout
+</button>
 
-  <main class="container">
+</div>
 
-    <!-- PROFILE -->
-
-    <div class="profile">
-
-      <div class="avatar" id="profileAvatar">
-        U
-      </div>
-
-      <div class="profileName" id="profileName">
-        User
-      </div>
-
-      <div class="profileEmail" id="profileEmail">
-        email
-      </div>
-
-    </div>
+</header>
 
 
-    <!-- CREATE -->
+<div id="notificationPanel"
+class="notificationPanel">
 
-    <div class="create">
+<h3>🔔 Notifications</h3>
 
-      <h3>📝 Create Post</h3>
+<div id="notifications">
+<div class="empty">No notifications</div>
+</div>
 
-      <input id="postTitle"
-             placeholder="Post title">
-
-      <textarea id="postText"
-                placeholder="What's on your mind?"></textarea>
-
-      <button class="mainBtn"
-              onclick="createPost()">
-        Publish Post
-      </button>
-
-    </div>
+</div>
 
 
-    <!-- FEED -->
+<main class="container">
 
-    <div id="feed">
-      <div class="loading">
-        Loading posts...
-      </div>
-    </div>
+<!-- PROFILE -->
 
-  </main>
+<div class="profile">
+
+<div class="profileTop">
+
+<div class="avatar"
+id="profileAvatar">
+U
+</div>
+
+<div class="profileInfo">
+
+<div class="profileName"
+id="profileName">
+User
+</div>
+
+<div class="profileEmail"
+id="profileEmail">
+email
+</div>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<b id="followersCount">0</b><br>
+Followers
+</div>
+
+<div class="stat">
+<b id="followingCount">0</b><br>
+Following
+</div>
+
+<div class="stat">
+<b id="postCount">0</b><br>
+Posts
+</div>
+
+</div>
+
+<button class="editProfileBtn"
+onclick="openProfileEdit()">
+✏️ Edit Profile
+</button>
+
+</div>
+
+
+<!-- CREATE POST -->
+
+<div class="create">
+
+<h3>📝 Create Post</h3>
+
+<input id="postTitle"
+placeholder="Post title">
+
+<textarea id="postText"
+placeholder="What's on your mind?"></textarea>
+
+<button class="mainBtn"
+onclick="createPost()">
+Publish Post
+</button>
+
+</div>
+
+
+<div id="feed">
+
+<div class="loading">
+Loading posts...
+</div>
+
+</div>
+
+</main>
 
 </section>
+
+
+<!-- PROFILE MODAL -->
+
+<div id="profileModal"
+class="modal">
+
+<div class="modalBox">
+
+<h2>✏️ Edit Profile</h2>
+
+<input id="editName"
+placeholder="Your name">
+
+<div class="modalActions">
+
+<button class="cancelBtn"
+onclick="closeProfileEdit()">
+Cancel
+</button>
+
+<button class="saveBtn"
+onclick="saveProfile()">
+Save
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- POST EDIT MODAL -->
+
+<div id="postModal"
+class="modal">
+
+<div class="modalBox">
+
+<h2>✏️ Edit Post</h2>
+
+<input id="editPostTitle"
+placeholder="Post title">
+
+<textarea id="editPostText"
+placeholder="Post text"></textarea>
+
+<div class="modalActions">
+
+<button class="cancelBtn"
+onclick="closePostEdit()">
+Cancel
+</button>
+
+<button class="saveBtn"
+onclick="savePostEdit()">
+Save
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 
 <script>
 
-/* =========================================
-   FIREBASE CONFIG
-========================================= */
+/* =========================
+FIREBASE
+========================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyBU-KZ_CRAS_AKNfgJjimU-f-74qoJHUko",
@@ -546,754 +820,1271 @@ const firebaseConfig = {
   measurementId: "G-JSFH705D24"
 };
 
-
-/* =========================================
-   INITIALIZE FIREBASE
-========================================= */
-
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+let postsListener = null;
+let currentEditPostId = null;
+let commentListeners = {};
+let notificationListener = null;
 
-/* =========================================
-   AUTH UI
-========================================= */
+
+/* =========================
+AUTH UI
+========================= */
 
 function showSignup(){
 
-  document.getElementById("loginForm").style.display="none";
+document.getElementById("loginForm").style.display="none";
 
-  document.getElementById("signupForm").style.display="block";
+document.getElementById("signupForm").style.display="block";
 
-  document.getElementById("authError").innerText="";
+document.getElementById("authError").innerText="";
 }
 
 
 function showLogin(){
 
-  document.getElementById("signupForm").style.display="none";
+document.getElementById("signupForm").style.display="none";
 
-  document.getElementById("loginForm").style.display="block";
+document.getElementById("loginForm").style.display="block";
 
-  document.getElementById("authError").innerText="";
+document.getElementById("authError").innerText="";
 }
 
 
-/* =========================================
-   SIGN UP
-========================================= */
+/* =========================
+SIGNUP
+========================= */
 
 async function signup(){
 
-  const name =
-    document.getElementById("signupName").value.trim();
+const name=document.getElementById("signupName").value.trim();
 
-  const email =
-    document.getElementById("signupEmail").value.trim();
+const email=document.getElementById("signupEmail").value.trim();
 
-  const password =
-    document.getElementById("signupPassword").value;
+const password=document.getElementById("signupPassword").value;
 
-  const error =
-    document.getElementById("authError");
+const error=document.getElementById("authError");
 
+if(!name || !email || !password){
 
-  if(!name || !email || !password){
+error.innerText="সবগুলো ঘর পূরণ করো।";
 
-    error.innerText="সবগুলো ঘর পূরণ করো।";
-    return;
-  }
+return;
+}
 
+if(password.length<6){
 
-  if(password.length < 6){
+error.innerText="Password কমপক্ষে ৬ characters হতে হবে।";
 
-    error.innerText="Password কমপক্ষে ৬ characters হতে হবে।";
-    return;
-  }
+return;
+}
 
+try{
 
-  try{
+const result=
+await auth.createUserWithEmailAndPassword(
+email,
+password
+);
 
-    const result =
-      await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+const user=result.user;
 
+await db.collection("users")
+.doc(user.uid)
+.set({
 
-    const user = result.user;
+uid:user.uid,
+name:name,
+email:email,
+followers:[],
+following:[],
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
 
+});
 
-    await db.collection("users")
-      .doc(user.uid)
-      .set({
+error.innerText="";
 
-        uid:user.uid,
-        name:name,
-        email:email,
-        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+}catch(e){
 
-      });
+error.innerText=firebaseError(e);
 
-
-    error.innerText="";
-
-  }catch(e){
-
-    error.innerText = firebaseError(e);
-
-  }
+}
 
 }
 
 
-/* =========================================
-   LOGIN
-========================================= */
+/* =========================
+LOGIN
+========================= */
 
 async function login(){
 
-  const email =
-    document.getElementById("loginEmail").value.trim();
+const email=
+document.getElementById("loginEmail").value.trim();
 
-  const password =
-    document.getElementById("loginPassword").value;
+const password=
+document.getElementById("loginPassword").value;
 
-  const error =
-    document.getElementById("authError");
+const error=
+document.getElementById("authError");
 
+if(!email || !password){
 
-  if(!email || !password){
+error.innerText="Email এবং password দাও।";
 
-    error.innerText="Email এবং password দাও।";
-    return;
-  }
+return;
+}
 
+try{
 
-  try{
+await auth.signInWithEmailAndPassword(
+email,
+password
+);
 
-    await auth.signInWithEmailAndPassword(
-      email,
-      password
-    );
+error.innerText="";
 
-    error.innerText="";
+}catch(e){
 
-  }catch(e){
+error.innerText=firebaseError(e);
 
-    error.innerText = firebaseError(e);
-
-  }
+}
 
 }
 
 
-/* =========================================
-   LOGOUT
-========================================= */
+/* =========================
+LOGOUT
+========================= */
 
 async function logout(){
 
-  await auth.signOut();
+await auth.signOut();
 
 }
 
 
-/* =========================================
-   FIREBASE ERROR
-========================================= */
+/* =========================
+ERROR
+========================= */
 
 function firebaseError(error){
 
-  const code = error.code || "";
+const code=error.code||"";
 
-  if(code.includes("invalid-email"))
-    return "Email address ঠিক নয়।";
+if(code.includes("invalid-email"))
+return "Email address ঠিক নয়।";
 
-  if(code.includes("user-not-found"))
-    return "এই email দিয়ে account নেই।";
+if(code.includes("user-not-found"))
+return "এই email দিয়ে account নেই।";
 
-  if(code.includes("wrong-password"))
-    return "Password ভুল।";
+if(code.includes("wrong-password"))
+return "Password ভুল।";
 
-  if(code.includes("email-already-in-use"))
-    return "এই email দিয়ে account আগে থেকেই আছে।";
+if(code.includes("invalid-credential"))
+return "Email অথবা password ভুল।";
 
-  if(code.includes("weak-password"))
-    return "Password আরও শক্ত করো।";
+if(code.includes("email-already-in-use"))
+return "এই email দিয়ে account আগে থেকেই আছে।";
 
-  return error.message || "Something went wrong.";
+if(code.includes("weak-password"))
+return "Password আরও শক্ত করো।";
+
+return error.message||"Something went wrong.";
 
 }
 
 
-/* =========================================
-   AUTH STATE
-========================================= */
+/* =========================
+AUTH STATE
+========================= */
 
 auth.onAuthStateChanged(async(user)=>{
 
-  if(user){
+if(user){
 
-    document.getElementById("authPage").style.display="none";
+document.getElementById("authPage").style.display="none";
 
-    document.getElementById("app").style.display="block";
+document.getElementById("app").style.display="block";
 
-    await loadProfile(user);
+await loadProfile(user);
 
-    loadPosts();
+loadPosts();
 
-  }else{
+loadNotifications();
 
-    document.getElementById("authPage").style.display="flex";
+}else{
 
-    document.getElementById("app").style.display="none";
+document.getElementById("authPage").style.display="flex";
 
-  }
+document.getElementById("app").style.display="none";
+
+if(postsListener){
+postsListener();
+postsListener=null;
+}
+
+if(notificationListener){
+notificationListener();
+notificationListener=null;
+}
+
+}
 
 });
 
 
-/* =========================================
-   PROFILE
-========================================= */
+/* =========================
+GET PROFILE
+========================= */
+
+async function getProfile(uid){
+
+const snap=
+await db.collection("users")
+.doc(uid)
+.get();
+
+if(snap.exists)
+return snap.data();
+
+return null;
+
+}
+
+
+/* =========================
+LOAD PROFILE
+========================= */
 
 async function loadProfile(user){
 
-  let name = user.email.split("@")[0];
+let data=await getProfile(user.uid);
 
-  try{
+let name=
+data && data.name
+?data.name
+:user.email.split("@")[0];
 
-    const snap =
-      await db.collection("users")
-      .doc(user.uid)
-      .get();
+document.getElementById("profileName").innerText=name;
 
-    if(snap.exists){
+document.getElementById("profileEmail").innerText=user.email;
 
-      const data = snap.data();
+document.getElementById("profileAvatar").innerText=
+name.charAt(0).toUpperCase();
 
-      name = data.name || name;
+document.getElementById("followersCount").innerText=
+data && data.followers
+?data.followers.length
+:0;
 
-    }
+document.getElementById("followingCount").innerText=
+data && data.following
+?data.following.length
+:0;
 
-  }catch(e){
-
-    console.log(e);
-
-  }
-
-
-  document.getElementById("profileName").innerText=name;
-
-  document.getElementById("profileEmail").innerText=user.email;
-
-  document.getElementById("profileAvatar").innerText=
-    name.charAt(0).toUpperCase();
+await loadMyPostCount();
 
 }
 
 
-/* =========================================
-   CREATE POST
-========================================= */
+/* =========================
+POST COUNT
+========================= */
+
+async function loadMyPostCount(){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+const snap=
+await db.collection("posts")
+.where("uid","==",user.uid)
+.get();
+
+document.getElementById("postCount").innerText=
+snap.size;
+
+}
+
+
+/* =========================
+EDIT PROFILE
+========================= */
+
+async function openProfileEdit(){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+const data=await getProfile(user.uid);
+
+document.getElementById("editName").value=
+data && data.name
+?data.name
+:"";
+
+document.getElementById("profileModal").style.display="flex";
+
+}
+
+
+function closeProfileEdit(){
+
+document.getElementById("profileModal").style.display="none";
+
+}
+
+
+async function saveProfile(){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+const name=
+document.getElementById("editName").value.trim();
+
+if(!name){
+
+alert("Name দাও।");
+
+return;
+}
+
+try{
+
+await db.collection("users")
+.doc(user.uid)
+.update({
+
+name:name
+
+});
+
+closeProfileEdit();
+
+await loadProfile(user);
+
+loadPosts();
+
+}catch(e){
+
+alert("Profile update করা যায়নি: "+e.message);
+
+}
+
+}
+
+
+/* =========================
+CREATE POST
+========================= */
 
 async function createPost(){
 
-  const user = auth.currentUser;
+const user=auth.currentUser;
 
-  if(!user) return;
+if(!user)return;
 
+const title=
+document.getElementById("postTitle").value.trim();
 
-  const title =
-    document.getElementById("postTitle").value.trim();
+const text=
+document.getElementById("postText").value.trim();
 
-  const text =
-    document.getElementById("postText").value.trim();
+if(!title || !text){
 
+alert("Title এবং post লিখো।");
 
-  if(!title || !text){
+return;
+}
 
-    alert("Title এবং post লিখো।");
-    return;
-  }
+const profile=await getProfile(user.uid);
 
+const name=
+profile && profile.name
+?profile.name
+:user.email.split("@")[0];
 
-  let name = user.email.split("@")[0];
+try{
 
+await db.collection("posts").add({
 
-  try{
+uid:user.uid,
+name:name,
+title:title,
+text:text,
+likes:[],
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
 
-    const profile =
-      await db.collection("users")
-      .doc(user.uid)
-      .get();
+});
 
-    if(profile.exists){
+document.getElementById("postTitle").value="";
 
-      name =
-        profile.data().name || name;
+document.getElementById("postText").value="";
 
-    }
+loadMyPostCount();
 
+}catch(e){
 
-    await db.collection("posts").add({
+alert("Post করা যায়নি: "+e.message);
 
-      uid:user.uid,
-
-      name:name,
-
-      title:title,
-
-      text:text,
-
-      likes:[],
-
-      createdAt:
-        firebase.firestore.FieldValue.serverTimestamp()
-
-    });
-
-
-    document.getElementById("postTitle").value="";
-
-    document.getElementById("postText").value="";
-
-
-    loadPosts();
-
-
-  }catch(e){
-
-    alert("Post করা যায়নি: "+e.message);
-
-  }
+}
 
 }
 
 
-/* =========================================
-   LOAD POSTS
-========================================= */
-
-let postsListener = null;
-
+/* =========================
+LOAD POSTS
+========================= */
 
 function loadPosts(){
 
-  const feed =
-    document.getElementById("feed");
+const feed=document.getElementById("feed");
 
-  feed.innerHTML =
-    '<div class="loading">Loading posts...</div>';
+feed.innerHTML=
+'<div class="loading">Loading posts...</div>';
 
+if(postsListener){
+postsListener();
+}
 
-  if(postsListener){
+postsListener=
+db.collection("posts")
+.orderBy("createdAt","desc")
+.onSnapshot(
 
-    postsListener();
+snapshot=>{
 
-  }
+if(snapshot.empty){
 
+feed.innerHTML=
+'<div class="empty">এখনো কোনো post নেই।<br>প্রথম post তুমি করো! 🚀</div>';
 
-  postsListener =
-    db.collection("posts")
-      .orderBy("createdAt","desc")
-      .onSnapshot(
+return;
 
-        snapshot=>{
+}
 
-          if(snapshot.empty){
+feed.innerHTML="";
 
-            feed.innerHTML =
-              '<div class="empty">এখনো কোনো post নেই।<br>প্রথম post তুমি করো! 🚀</div>';
+snapshot.forEach(doc=>{
 
-            return;
-          }
+renderPost(doc.id,doc.data());
 
+});
 
-          feed.innerHTML="";
+},
 
+error=>{
 
-          snapshot.forEach(doc=>{
+console.error(error);
 
-            renderPost(
-              doc.id,
-              doc.data()
-            );
+feed.innerHTML=
+'<div class="empty">Posts load করা যায়নি।</div>';
 
-          });
+}
 
-        },
-
-        error=>{
-
-          console.error(error);
-
-          feed.innerHTML =
-            '<div class="empty">Posts load করা যায়নি।</div>';
-
-        }
-
-      );
+);
 
 }
 
 
-/* =========================================
-   RENDER POST
-========================================= */
+/* =========================
+RENDER POST
+========================= */
 
-function renderPost(id,data){
+async function renderPost(id,data){
 
-  const feed =
-    document.getElementById("feed");
+const feed=document.getElementById("feed");
 
-  const user =
-    auth.currentUser;
+const user=auth.currentUser;
 
+const likes=
+Array.isArray(data.likes)
+?data.likes
+:[];
 
-  const likes =
-    Array.isArray(data.likes)
-      ? data.likes
-      : [];
+const liked=
+user && likes.includes(user.uid);
 
+const time=
+data.createdAt
+?data.createdAt.toDate().toLocaleString()
+:"Just now";
 
-  const liked =
-    user && likes.includes(user.uid);
+const article=document.createElement("article");
 
+article.className="post";
 
-  const time =
-    data.createdAt
-      ? data.createdAt.toDate().toLocaleString()
-      : "Just now";
+const ownPost=
+user && data.uid===user.uid;
 
+let following=false;
 
-  const article =
-    document.createElement("article");
+if(user && data.uid!==user.uid){
 
-  article.className="post";
+const target=await getProfile(data.uid);
 
+following=
+target &&
+Array.isArray(target.followers) &&
+target.followers.includes(user.uid);
 
-  article.innerHTML=`
+}
 
-    <div class="postHead">
+article.innerHTML=`
 
-      <div class="smallAvatar">
-        ${(data.name || "U").charAt(0).toUpperCase()}
-      </div>
+<div class="postHead">
 
-      <div>
+<div class="smallAvatar">
+${escapeHTML((data.name||"U").charAt(0).toUpperCase())}
+</div>
 
-        <div class="postUser">
-          ${escapeHTML(data.name || "User")}
-        </div>
+<div>
 
-        <div class="postTime">
-          ${time}
-        </div>
+<div class="postUser">
+${escapeHTML(data.name||"User")}
+</div>
 
-      </div>
+<div class="postTime">
+${escapeHTML(time)}
+</div>
 
-    </div>
+</div>
 
+${data.uid!==user.uid ?`
 
-    <div class="postBody">
+<button class="followBtn ${following?"following":""}"
+onclick="toggleFollow('${data.uid}')">
 
-      <div class="postTitle">
-        ${escapeHTML(data.title || "")}
-      </div>
+${following?"Following":"Follow"}
 
-      <div class="postText">
-        ${escapeHTML(data.text || "")}
-      </div>
+</button>
 
-    </div>
+`:""}
 
+${ownPost?`
 
-    <div class="postActions">
+<div class="postMenu">
 
-      <button
-        class="action ${liked ? "liked" : ""}"
-        onclick="toggleLike('${id}')">
+<button class="menuBtn"
+onclick="openPostEdit('${id}',
+'${escapeAttr(data.title||"")}',
+'${escapeAttr(data.text||"")}')">
 
-        ${liked ? "❤️" : "🤍"}
-        ${likes.length}
+✏️
 
-      </button>
+</button>
 
+<button class="menuBtn"
+onclick="deletePost('${id}')">
 
-      <button
-        class="action"
-        onclick="focusComment('${id}')">
+🗑️
 
-        💬 Comment
+</button>
 
-      </button>
+</div>
 
-    </div>
+`:""}
 
-
-    <div class="comments">
-
-      <div id="comments-${id}">
-        <span style="color:#61776e">
-          Loading comments...
-        </span>
-      </div>
+</div>
 
 
-      <div class="commentForm">
+<div class="postBody">
 
-        <input
-          id="commentInput-${id}"
-          placeholder="Write a comment...">
+<div class="postTitle">
+${escapeHTML(data.title||"")}
+</div>
 
-        <button onclick="addComment('${id}')">
-          Send
-        </button>
+<div class="postText">
+${escapeHTML(data.text||"")}
+</div>
 
-      </div>
-
-    </div>
-
-  `;
+</div>
 
 
-  feed.appendChild(article);
+<div class="postActions">
+
+<button
+class="action ${liked?"liked":""}"
+onclick="toggleLike('${id}')">
+
+${liked?"❤️":"🤍"} ${likes.length}
+
+</button>
+
+<button
+class="action"
+onclick="focusComment('${id}')">
+
+💬 Comment
+
+</button>
+
+</div>
 
 
-  loadComments(id);
+<div class="comments">
+
+<div id="comments-${id}">
+<span style="color:#61776e">
+Loading comments...
+</span>
+</div>
+
+<div class="commentForm">
+
+<input
+id="commentInput-${id}"
+placeholder="Write a comment...">
+
+<button onclick="addComment('${id}')">
+Send
+</button>
+
+</div>
+
+</div>
+
+`;
+
+feed.appendChild(article);
+
+loadComments(id);
 
 }
 
 
-/* =========================================
-   LIKE
-========================================= */
+/* =========================
+LIKE
+========================= */
 
 async function toggleLike(postId){
 
-  const user = auth.currentUser;
+const user=auth.currentUser;
 
-  if(!user) return;
+if(!user)return;
 
+const ref=
+db.collection("posts")
+.doc(postId);
 
-  const ref =
-    db.collection("posts").doc(postId);
+try{
 
+const snap=await ref.get();
 
-  try{
+if(!snap.exists)return;
 
-    const snap =
-      await ref.get();
+const data=snap.data();
 
-    if(!snap.exists) return;
+const likes=data.likes||[];
 
+if(likes.includes(user.uid)){
 
-    const likes =
-      snap.data().likes || [];
+await ref.update({
 
+likes:
+firebase.firestore.FieldValue.arrayRemove(
+user.uid
+)
 
-    if(likes.includes(user.uid)){
+});
 
-      await ref.update({
+}else{
 
-        likes:
-          firebase.firestore.FieldValue.arrayRemove(
-            user.uid
-          )
+await ref.update({
 
-      });
+likes:
+firebase.firestore.FieldValue.arrayUnion(
+user.uid
+)
 
-    }else{
+});
 
-      await ref.update({
+if(data.uid!==user.uid){
 
-        likes:
-          firebase.firestore.FieldValue.arrayUnion(
-            user.uid
-          )
+await createNotification(
+data.uid,
+"❤️",
+"তোমার পোস্টে কেউ Like দিয়েছে।"
+);
 
-      });
+}
 
-    }
+}
 
-  }catch(e){
+}catch(e){
 
-    console.error(e);
+console.error(e);
 
-  }
+}
 
 }
 
 
-/* =========================================
-   COMMENTS
-========================================= */
+/* =========================
+EDIT POST
+========================= */
+
+function escapeAttr(value){
+
+return String(value)
+.replaceAll("\\","\\\\")
+.replaceAll("'","\\'");
+
+}
+
+
+function openPostEdit(id,title,text){
+
+currentEditPostId=id;
+
+document.getElementById("editPostTitle").value=title;
+
+document.getElementById("editPostText").value=text;
+
+document.getElementById("postModal").style.display="flex";
+
+}
+
+
+function closePostEdit(){
+
+currentEditPostId=null;
+
+document.getElementById("postModal").style.display="none";
+
+}
+
+
+async function savePostEdit(){
+
+const user=auth.currentUser;
+
+if(!user || !currentEditPostId)return;
+
+const title=
+document.getElementById("editPostTitle").value.trim();
+
+const text=
+document.getElementById("editPostText").value.trim();
+
+if(!title || !text){
+
+alert("Title এবং text দাও।");
+
+return;
+}
+
+try{
+
+const ref=
+db.collection("posts")
+.doc(currentEditPostId);
+
+const snap=await ref.get();
+
+if(!snap.exists)return;
+
+if(snap.data().uid!==user.uid){
+
+alert("এই post edit করার অনুমতি নেই।");
+
+return;
+
+}
+
+await ref.update({
+
+title:title,
+text:text,
+updatedAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+closePostEdit();
+
+}catch(e){
+
+alert("Post update করা যায়নি: "+e.message);
+
+}
+
+}
+
+
+/* =========================
+DELETE POST
+========================= */
+
+async function deletePost(postId){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+if(!confirm("এই post delete করতে চাও?"))return;
+
+try{
+
+const ref=
+db.collection("posts")
+.doc(postId);
+
+const snap=await ref.get();
+
+if(!snap.exists)return;
+
+if(snap.data().uid!==user.uid){
+
+alert("এই post delete করার অনুমতি নেই।");
+
+return;
+
+}
+
+await ref.delete();
+
+loadMyPostCount();
+
+}catch(e){
+
+alert("Delete করা যায়নি: "+e.message);
+
+}
+
+}
+
+
+/* =========================
+COMMENTS
+========================= */
 
 function loadComments(postId){
 
-  db.collection("posts")
-    .doc(postId)
-    .collection("comments")
-    .orderBy("createdAt","asc")
-    .onSnapshot(snapshot=>{
+if(commentListeners[postId]){
+commentListeners[postId]();
+}
 
-      const box =
-        document.getElementById(
-          "comments-"+postId
-        );
+commentListeners[postId]=
+db.collection("posts")
+.doc(postId)
+.collection("comments")
+.orderBy("createdAt","asc")
+.onSnapshot(snapshot=>{
 
+const box=
+document.getElementById(
+"comments-"+postId
+);
 
-      if(!box) return;
+if(!box)return;
 
+box.innerHTML="";
 
-      if(snapshot.empty){
+snapshot.forEach(doc=>{
 
-        box.innerHTML="";
+const data=doc.data();
 
-        return;
+const div=document.createElement("div");
 
-      }
+div.className="comment";
 
+div.innerHTML=
+"<b>"+
+escapeHTML(data.name||"User")+
+"</b>: "+
+escapeHTML(data.text||"");
 
-      box.innerHTML="";
+box.appendChild(div);
 
+});
 
-      snapshot.forEach(doc=>{
-
-        const data=doc.data();
-
-        const div=
-          document.createElement("div");
-
-        div.className="comment";
-
-        div.innerHTML=
-          "<b>"+
-          escapeHTML(data.name || "User")+
-          "</b>: "+
-          escapeHTML(data.text || "");
-
-        box.appendChild(div);
-
-      });
-
-    });
+});
 
 }
 
 
 async function addComment(postId){
 
-  const user =
-    auth.currentUser;
+const user=auth.currentUser;
 
-  if(!user) return;
+if(!user)return;
 
+const input=
+document.getElementById(
+"commentInput-"+postId
+);
 
-  const input =
-    document.getElementById(
-      "commentInput-"+postId
-    );
+const text=input.value.trim();
 
+if(!text)return;
 
-  const text =
-    input.value.trim();
+const profile=await getProfile(user.uid);
 
+const name=
+profile && profile.name
+?profile.name
+:user.email.split("@")[0];
 
-  if(!text) return;
+try{
 
+const post=
+await db.collection("posts")
+.doc(postId)
+.get();
 
-  let name =
-    user.email.split("@")[0];
+await db.collection("posts")
+.doc(postId)
+.collection("comments")
+.add({
 
+uid:user.uid,
+name:name,
+text:text,
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
 
-  try{
+});
 
-    const profile =
-      await db.collection("users")
-      .doc(user.uid)
-      .get();
+input.value="";
 
+if(post.exists && post.data().uid!==user.uid){
 
-    if(profile.exists){
+await createNotification(
+post.data().uid,
+"💬",
+`${name} তোমার পোস্টে Comment করেছে।`
+);
 
-      name =
-        profile.data().name || name;
+}
 
-    }
+}catch(e){
 
+alert("Comment করা যায়নি: "+e.message);
 
-    await db.collection("posts")
-      .doc(postId)
-      .collection("comments")
-      .add({
-
-        uid:user.uid,
-
-        name:name,
-
-        text:text,
-
-        createdAt:
-          firebase.firestore.FieldValue.serverTimestamp()
-
-      });
-
-
-    input.value="";
-
-
-  }catch(e){
-
-    alert("Comment করা যায়নি: "+e.message);
-
-  }
+}
 
 }
 
 
 function focusComment(postId){
 
-  const input =
-    document.getElementById(
-      "commentInput-"+postId
-    );
+const input=
+document.getElementById(
+"commentInput-"+postId
+);
 
-  if(input){
+if(input){
 
-    input.focus();
+input.focus();
 
-    input.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
+input.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
 
-  }
+}
 
 }
 
 
-/* =========================================
-   SECURITY: HTML ESCAPE
-========================================= */
+/* =========================
+FOLLOW
+========================= */
+
+async function toggleFollow(targetUid){
+
+const user=auth.currentUser;
+
+if(!user || user.uid===targetUid)return;
+
+const myRef=
+db.collection("users")
+.doc(user.uid);
+
+const targetRef=
+db.collection("users")
+.doc(targetUid);
+
+try{
+
+const me=await myRef.get();
+
+const target=await targetRef.get();
+
+if(!me.exists || !target.exists)return;
+
+const myData=me.data();
+
+const targetData=target.data();
+
+const following=
+Array.isArray(myData.following)
+?myData.following
+:[];
+
+const followers=
+Array.isArray(targetData.followers)
+?targetData.followers
+:[];
+
+if(following.includes(targetUid)){
+
+await myRef.update({
+
+following:
+firebase.firestore.FieldValue.arrayRemove(
+targetUid
+)
+
+});
+
+await targetRef.update({
+
+followers:
+firebase.firestore.FieldValue.arrayRemove(
+user.uid
+)
+
+});
+
+}else{
+
+await myRef.update({
+
+following:
+firebase.firestore.FieldValue.arrayUnion(
+targetUid
+)
+
+});
+
+await targetRef.update({
+
+followers:
+firebase.firestore.FieldValue.arrayUnion(
+user.uid
+)
+
+});
+
+await createNotification(
+targetUid,
+"👥",
+"কেউ তোমাকে Follow করেছে।"
+);
+
+}
+
+await loadProfile(user);
+
+}catch(e){
+
+alert("Follow update করা যায়নি: "+e.message);
+
+}
+
+}
+
+
+/* =========================
+NOTIFICATIONS
+========================= */
+
+async function createNotification(uid,icon,text){
+
+const user=auth.currentUser;
+
+if(!user || uid===user.uid)return;
+
+await db.collection("notifications")
+.add({
+
+to:uid,
+from:user.uid,
+icon:icon,
+text:text,
+read:false,
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+}
+
+
+function loadNotifications(){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+if(notificationListener){
+notificationListener();
+}
+
+notificationListener=
+db.collection("notifications")
+.where("to","==",user.uid)
+.onSnapshot(snapshot=>{
+
+const box=
+document.getElementById("notifications");
+
+const count=
+document.getElementById("notificationCount");
+
+let unread=0;
+
+box.innerHTML="";
+
+const docs=[];
+
+snapshot.forEach(doc=>{
+
+docs.push({
+id:doc.id,
+data:doc.data()
+});
+
+if(!doc.data().read){
+unread++;
+}
+
+});
+
+docs.sort((a,b)=>{
+
+const ta=
+a.data.createdAt
+?a.data.createdAt.toMillis()
+:0;
+
+const tb=
+b.data.createdAt
+?b.data.createdAt.toMillis()
+:0;
+
+return tb-ta;
+
+});
+
+if(!docs.length){
+
+box.innerHTML=
+'<div class="empty">No notifications</div>';
+
+}else{
+
+docs.slice(0,30).forEach(item=>{
+
+const div=
+document.createElement("div");
+
+div.className="notification";
+
+div.innerHTML=
+`${escapeHTML(item.data.icon||"🔔")}
+${escapeHTML(item.data.text||"Notification")}
+<small>
+${item.data.createdAt
+?item.data.createdAt.toDate().toLocaleString()
+:"Just now"}
+</small>`;
+
+box.appendChild(div);
+
+});
+
+}
+
+count.innerText=unread;
+
+});
+
+}
+
+
+function toggleNotifications(){
+
+const panel=
+document.getElementById("notificationPanel");
+
+const visible=
+panel.style.display==="block";
+
+panel.style.display=
+visible?"none":"block";
+
+if(!visible){
+
+markNotificationsRead();
+
+}
+
+}
+
+
+async function markNotificationsRead(){
+
+const user=auth.currentUser;
+
+if(!user)return;
+
+const snap=
+await db.collection("notifications")
+.where("to","==",user.uid)
+.where("read","==",false)
+.get();
+
+const batch=db.batch();
+
+snap.forEach(doc=>{
+
+batch.update(
+doc.ref,
+{read:true}
+);
+
+});
+
+if(!snap.empty){
+
+await batch.commit();
+
+}
+
+}
+
+
+/* =========================
+HTML SECURITY
+========================= */
 
 function escapeHTML(value){
 
-  return String(value)
+return String(value)
 
-    .replaceAll("&","&amp;")
+.replaceAll("&","&amp;")
 
-    .replaceAll("<","&lt;")
+.replaceAll("<","&lt;")
 
-    .replaceAll(">","&gt;")
+.replaceAll(">","&gt;")
 
-    .replaceAll('"',"&quot;")
+.replaceAll('"',"&quot;")
 
-    .replaceAll("'","&#039;");
+.replaceAll("'","&#039;");
 
 }
 
