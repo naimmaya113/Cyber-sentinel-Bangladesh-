@@ -1,1014 +1,1573 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cyber Sentinel Bangladesh</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
+:root{
+  --bg:#050807;
+  --panel:#09110d;
+  --panel2:#0d1711;
+  --line:#173322;
+  --green:#00ff88;
+  --green2:#00c96a;
+  --text:#e8fff1;
+  --muted:#789584;
+  --danger:#ff5268;
+}
+
 body{
- min-height:100vh;
- background:#020806;
- color:#d9fff0;
- font-family:Arial,"Noto Sans Bengali",sans-serif;
- overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
 
-.matrix{
- position:fixed;inset:0;z-index:-2;overflow:hidden;background:#020806
-}
-.matrix span{
- position:absolute;top:-100%;color:rgba(0,255,136,.12);
- font:18px monospace;line-height:1.4;white-space:pre;
- animation:fall linear infinite
-}
-.matrix span:nth-child(1){left:3%;animation-duration:14s}
-.matrix span:nth-child(2){left:10%;animation-duration:18s}
-.matrix span:nth-child(3){left:17%;animation-duration:13s}
-.matrix span:nth-child(4){left:24%;animation-duration:20s}
-.matrix span:nth-child(5){left:31%;animation-duration:16s}
-.matrix span:nth-child(6){left:38%;animation-duration:19s}
-.matrix span:nth-child(7){left:45%;animation-duration:14s}
-.matrix span:nth-child(8){left:52%;animation-duration:21s}
-.matrix span:nth-child(9){left:59%;animation-duration:15s}
-.matrix span:nth-child(10){left:66%;animation-duration:18s}
-.matrix span:nth-child(11){left:73%;animation-duration:13s}
-.matrix span:nth-child(12){left:80%;animation-duration:20s}
-.matrix span:nth-child(13){left:87%;animation-duration:16s}
-.matrix span:nth-child(14){left:94%;animation-duration:19s}
-
-@keyframes fall{
- from{transform:translateY(-100vh)}
- to{transform:translateY(220vh)}
+button,input,textarea{
+  font:inherit;
 }
 
-.glow{
- position:fixed;inset:0;z-index:-1;pointer-events:none;
- background:radial-gradient(circle at 50% 20%,rgba(0,255,136,.14),transparent 38%)
+button{cursor:pointer}
+
+.app{
+  min-height:100vh;
 }
 
-header{
- height:70px;display:flex;align-items:center;justify-content:space-between;
- padding:0 22px;background:rgba(1,12,8,.95);
- border-bottom:1px solid rgba(0,255,136,.25);
- position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)
+/* TOPBAR */
+
+.topbar{
+  height:64px;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:0 18px;
+  background:rgba(5,12,8,.97);
+  border-bottom:1px solid var(--line);
 }
 
-.logo{
- color:#00ff88;font-size:24px;font-weight:bold;
- text-shadow:0 0 12px #00ff88
+.brand{
+  color:var(--green);
+  font-weight:900;
+  font-size:18px;
+  white-space:nowrap;
+  text-shadow:0 0 15px rgba(0,255,136,.3);
 }
 
-.menu-btn{
- width:42px;height:42px;border:1px solid #08734a;
- background:#03140c;color:#00ff88;border-radius:10px;
- font-size:23px;cursor:pointer
+.search{
+  width:280px;
+  position:relative;
 }
 
-.menu-box{
- display:none;position:fixed;right:18px;top:80px;width:210px;
- background:#04140d;border:1px solid #08734a;border-radius:14px;
- padding:10px;z-index:200;box-shadow:0 15px 40px #000
-}
-.menu-box.show{display:block}
-.menu-box button{
- width:100%;text-align:left;background:transparent;color:#b9ffe0;
- border:0;padding:13px;border-radius:9px;cursor:pointer
-}
-.menu-box button:hover{background:#07311f;color:#00ff88}
-
-.hero{
- min-height:450px;display:flex;align-items:center;justify-content:center;
- text-align:center;padding:60px 20px
-}
-.hero h1{
- color:#00ff88;font-size:clamp(45px,9vw,78px);line-height:1.05;
- text-shadow:0 0 10px #00ff88,0 0 30px rgba(0,255,136,.5)
-}
-.hero-line{
- width:160px;height:2px;margin:30px auto;background:#00ff88;
- box-shadow:0 0 15px #00ff88
+.search input{
+  width:100%;
+  background:#07100b;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:22px;
+  outline:none;
+  padding:10px 15px 10px 38px;
 }
 
-.container{width:min(1000px,92%);margin:auto}
-
-.section-title{
- text-align:center;color:#00ff88;font-size:29px;margin:30px 0 20px;
- text-shadow:0 0 10px rgba(0,255,136,.4)
+.search span{
+  position:absolute;
+  left:14px;
+  top:9px;
+  color:var(--green);
 }
 
-.tool-grid{
- display:grid;grid-template-columns:repeat(2,1fr);gap:16px
+.top-actions{
+  margin-left:auto;
+  display:flex;
+  gap:8px;
 }
 
-.tool,.card{
- background:rgba(3,20,13,.94);
- border:1px solid rgba(0,255,136,.22);
- border-radius:18px
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:#08120c;
+  color:#9bc1aa;
 }
 
-.tool{
- min-height:155px;padding:20px;cursor:pointer;transition:.2s
-}
-.tool:hover{
- transform:translateY(-3px);border-color:#00ff88;
- box-shadow:0 10px 30px rgba(0,255,136,.1)
-}
-.tool-icon{
- width:45px;height:45px;display:grid;place-items:center;
- border-radius:12px;background:#06251a;border:1px solid #08734a;
- color:#00ff88;font-size:23px;margin-bottom:13px
-}
-.tool h3{color:#eafff6;margin-bottom:6px}
-.tool p{color:#75998a;font-size:13px}
-
-.card{padding:20px;margin-bottom:18px}
-.card h3{color:#00ff88;margin-bottom:15px}
-
-input,textarea,select{
- width:100%;background:#020a06;color:#eafff6;
- border:1px solid #075c3b;border-radius:11px;
- padding:13px;outline:none;font-size:15px
-}
-textarea{min-height:150px;resize:vertical}
-input:focus,textarea:focus,select:focus{
- border-color:#00ff88;box-shadow:0 0 12px rgba(0,255,136,.12)
+.icon-btn:hover{
+  color:var(--green);
+  border-color:var(--green);
 }
 
-.btn{
- background:#00ff88;color:#00150b;border:0;border-radius:10px;
- padding:12px 18px;font-weight:bold;cursor:pointer;margin-top:10px
-}
-.btn:hover{box-shadow:0 0 20px rgba(0,255,136,.45)}
-.btn.secondary{background:#062c1e;color:#00ff88;border:1px solid #08734a}
-.btn.danger{background:#351117;color:#ff9baa;border:1px solid #722330}
-
-.note{
- background:#03150e;border:1px solid #075538;border-radius:15px;
- padding:17px;margin-bottom:14px
-}
-.note-title{color:#00ff88;font-size:18px;font-weight:bold}
-.note-date{color:#658b7c;font-size:11px;margin-top:5px}
-.note-text{color:#d5eee4;white-space:pre-wrap;line-height:1.6;margin:12px 0}
-
-.qr-area{
- background:white;min-height:220px;border-radius:15px;
- display:flex;align-items:center;justify-content:center;
- padding:15px;margin-top:15px
-}
-.qr-area canvas{max-width:100%}
-
-.preview{
- max-width:100%;max-height:220px;display:none;
- margin-top:15px;border-radius:12px
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#0c2819;
+  color:var(--green);
+  border:1px solid #1c6b41;
+  font-weight:bold;
 }
 
-/* PDF */
-.pdf-options{
- display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px
-}
-.pdf-options label{
- display:block;color:#00ff88;font-size:13px;margin-bottom:7px
-}
-.pdf-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+/* LAYOUT */
 
-footer{
- text-align:center;color:#537568;border-top:1px solid #073b29;
- margin-top:50px;padding:35px 15px
+.layout{
+  display:grid;
+  grid-template-columns:240px minmax(400px,650px) 260px;
+  justify-content:center;
+  gap:20px;
+  padding:84px 18px 30px;
 }
 
-@media(max-width:700px){
- .logo{font-size:20px}
- .hero{min-height:420px}
- .hero h1{font-size:45px}
- .tool-grid{grid-template-columns:1fr}
- .pdf-options{grid-template-columns:1fr 1fr}
+/* SIDEBAR */
+
+.sidebar{
+  position:sticky;
+  top:84px;
+  height:max-content;
 }
-@media(max-width:430px){
- .pdf-options{grid-template-columns:1fr}
+
+.side-profile{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.big-avatar{
+  width:65px;
+  height:65px;
+  margin:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:var(--green);
+  background:#0b2417;
+  border:2px solid #16854e;
+  font-size:23px;
+  font-weight:bold;
+}
+
+.side-profile h3{
+  margin-top:10px;
+  font-size:15px;
+}
+
+.side-profile p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.menu{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:7px;
+}
+
+.menu button{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  color:#9ab6a4;
+  padding:12px;
+  border-radius:8px;
+}
+
+.menu button:hover,
+.menu button.active{
+  background:rgba(0,255,136,.07);
+  color:var(--green);
+}
+
+/* FEED */
+
+.feed-title{
+  margin-bottom:15px;
+}
+
+.feed-title h1{
+  color:var(--green);
+  font-size:22px;
+}
+
+.feed-title p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+/* CREATE */
+
+.create{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:15px;
+}
+
+.create-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.create input{
+  flex:1;
+  border:1px solid var(--line);
+  background:#07100b;
+  color:var(--text);
+  padding:11px 15px;
+  border-radius:22px;
+  outline:none;
+}
+
+.create-actions{
+  display:flex;
+  gap:6px;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+}
+
+.create-actions button{
+  flex:1;
+  border:0;
+  background:transparent;
+  color:#789987;
+  padding:9px;
+  border-radius:7px;
+}
+
+.create-actions button:hover{
+  background:#0c1b12;
+  color:var(--green);
+}
+
+/* POST */
+
+.post{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  margin-bottom:15px;
+  overflow:hidden;
+}
+
+.post-head{
+  display:flex;
+  gap:10px;
+  padding:15px;
+}
+
+.post-user{
+  flex:1;
+}
+
+.post-user strong{
+  font-size:14px;
+}
+
+.post-user small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  font-size:10px;
+}
+
+.more{
+  background:none;
+  border:0;
+  color:#688573;
+  font-size:20px;
+}
+
+.post-body{
+  padding:0 15px 15px;
+}
+
+.post-body p{
+  color:#cce6d5;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
+.post-image{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  display:block;
+  border-top:1px solid var(--line);
+}
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+  color:#648070;
+  font-size:11px;
+  padding:10px 15px;
+}
+
+.post-buttons{
+  display:flex;
+  border-top:1px solid var(--line);
+  padding:5px;
+}
+
+.post-buttons button{
+  flex:1;
+  border:0;
+  background:transparent;
+  color:#7c9987;
+  padding:10px;
+  border-radius:7px;
+}
+
+.post-buttons button:hover{
+  background:#0c1a11;
+  color:var(--green);
+}
+
+.post-buttons button.liked{
+  color:var(--green);
+}
+
+/* COMMENTS */
+
+.comments{
+  padding:0 15px 12px;
+}
+
+.comment{
+  background:#07100b;
+  border-radius:10px;
+  padding:8px 10px;
+  margin-top:7px;
+  font-size:12px;
+}
+
+.comment b{
+  color:var(--green);
+}
+
+.comment-form{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.comment-form input{
+  flex:1;
+  background:#07100b;
+  border:1px solid var(--line);
+  color:white;
+  padding:9px;
+  border-radius:18px;
+  outline:none;
+}
+
+.comment-form button{
+  width:40px;
+  border-radius:50%;
+  border:1px solid var(--green);
+  background:rgba(0,255,136,.08);
+  color:var(--green);
+}
+
+/* RIGHT */
+
+.rightbar{
+  position:sticky;
+  top:84px;
+  height:max-content;
+}
+
+.box{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+.box h3{
+  font-size:14px;
+  color:var(--green);
+  margin-bottom:12px;
+}
+
+.person{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 0;
+}
+
+.person .mini{
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#0b2417;
+  color:var(--green);
+  border:1px solid #195d39;
+  font-size:12px;
+}
+
+.person div{
+  flex:1;
+}
+
+.person strong{
+  display:block;
+  font-size:12px;
+}
+
+.person small{
+  color:var(--muted);
+}
+
+.follow{
+  border:1px solid #1c7546;
+  background:rgba(0,255,136,.06);
+  color:var(--green);
+  border-radius:6px;
+  padding:6px 8px;
+  font-size:10px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(0,0,0,.78);
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(550px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#07100b;
+  border:1px solid var(--green);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 0 40px rgba(0,255,136,.15);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.modal-head h2{
+  color:var(--green);
+  font-size:18px;
+}
+
+.close{
+  background:none;
+  border:0;
+  color:#789987;
+  font-size:23px;
+}
+
+.modal textarea{
+  width:100%;
+  min-height:150px;
+  resize:vertical;
+  background:#030705;
+  border:1px solid var(--line);
+  color:white;
+  border-radius:9px;
+  padding:13px;
+  outline:none;
+}
+
+.modal-footer{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.primary{
+  flex:1;
+  background:rgba(0,255,136,.08);
+  color:var(--green);
+  border:1px solid var(--green);
+  border-radius:8px;
+  padding:11px;
+}
+
+.secondary{
+  flex:1;
+  background:#0b1710;
+  color:#9bb8a5;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:11px;
+}
+
+/* PROFILE */
+
+.profile-cover{
+  height:150px;
+  border-radius:12px 12px 0 0;
+  background:
+    linear-gradient(135deg,#03170d,#0b3922,#021008);
+  border:1px solid var(--line);
+}
+
+.profile-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-top:0;
+  padding:0 20px 20px;
+  margin-bottom:15px;
+}
+
+.profile-avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  margin-top:-45px;
+  display:grid;
+  place-items:center;
+  background:#0b2617;
+  border:3px solid #07100b;
+  outline:1px solid var(--green);
+  color:var(--green);
+  font-size:30px;
+  font-weight:bold;
+}
+
+.profile-card h2{
+  margin-top:10px;
+}
+
+.profile-card p{
+  color:var(--muted);
+  margin-top:5px;
+  font-size:12px;
+}
+
+/* NOTIFICATION */
+
+.notification{
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  color:#a6c2af;
+}
+
+.notification b{
+  color:var(--green);
+}
+
+/* LOGIN */
+
+.login{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at center,rgba(0,255,136,.1),transparent 45%),
+    #020604;
+  padding:20px;
+}
+
+.login.show{
+  display:flex;
+}
+
+.login-box{
+  width:min(400px,100%);
+  background:#07100b;
+  border:1px solid var(--green);
+  border-radius:15px;
+  padding:30px;
+  box-shadow:0 0 45px rgba(0,255,136,.1);
+}
+
+.login-box h1{
+  color:var(--green);
+  font-size:23px;
+  text-align:center;
+}
+
+.login-box p{
+  color:var(--muted);
+  text-align:center;
+  font-size:11px;
+  margin:7px 0 20px;
+}
+
+.login-box input{
+  width:100%;
+  background:#030705;
+  border:1px solid var(--line);
+  color:white;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:10px;
+  outline:none;
+}
+
+.login-box button{
+  width:100%;
+  background:rgba(0,255,136,.08);
+  color:var(--green);
+  border:1px solid var(--green);
+  border-radius:8px;
+  padding:12px;
+  margin-top:5px;
+}
+
+.login-box .switch{
+  border:0;
+  background:none;
+  color:#78a48a;
+  font-size:11px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#07100b;
+  color:var(--green);
+  border:1px solid var(--green);
+  border-radius:8px;
+  padding:11px 15px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:.2s;
+  z-index:500;
+  font-size:12px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+  .layout{
+    grid-template-columns:210px minmax(400px,650px);
+  }
+
+  .rightbar{
+    display:none;
+  }
+}
+
+@media(max-width:720px){
+
+  .topbar{
+    padding:0 10px;
+    gap:8px;
+  }
+
+  .brand{
+    font-size:14px;
+  }
+
+  .search{
+    width:auto;
+    flex:1;
+  }
+
+  .top-actions .icon-btn:nth-child(2),
+  .top-actions .icon-btn:nth-child(3){
+    display:none;
+  }
+
+  .layout{
+    display:block;
+    padding:78px 10px 20px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .feed-title h1{
+    font-size:20px;
+  }
+
+  .create-actions button{
+    font-size:11px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="matrix">
-<span>01010101<br>CYBER<br>10101010</span>
-<span>10101010<br>NETWORK<br>01010101</span>
-<span>CYBER<br>010101<br>SENTINEL</span>
-<span>10101010<br>SECURITY</span>
-<span>CSB<br>010101<br>BD</span>
-<span>10101010<br>SECURITY</span>
-<span>01010101<br>CYBER</span>
-<span>10101010<br>CSB</span>
-<span>SECURITY<br>01010101</span>
-<span>CYBER<br>10101010</span>
-<span>CSB<br>01010101</span>
-<span>NETWORK<br>10101010</span>
-<span>01010101<br>CYBER</span>
-<span>SECURITY<br>10101010</span>
+<!-- LOGIN -->
+
+<section class="login show" id="loginPage">
+
+<div class="login-box">
+
+<h1>CYBER SENTINEL</h1>
+
+<p>BANGLADESH • SOCIAL NETWORK</p>
+
+<input id="loginName" placeholder="Your name">
+
+<input id="loginEmail" placeholder="Email">
+
+<button onclick="login()">ENTER NETWORK</button>
+
+<p style="margin-top:15px">
+Demo login — data stays in this browser.
+</p>
+
 </div>
 
-<div class="glow"></div>
+</section>
 
-<header>
-<div class="logo">🛡️ CSB</div>
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- APP -->
+
+<div class="app" id="app" style="display:none">
+
+<header class="topbar">
+
+<div class="brand">CYBER SENTINEL</div>
+
+<div class="search">
+
+<span>⌕</span>
+
+<input
+id="search"
+placeholder="Search people or posts..."
+oninput="searchPosts()">
+
+</div>
+
+<div class="top-actions">
+
+<button class="icon-btn" onclick="showHome()">⌂</button>
+
+<button class="icon-btn" onclick="showNotifications()">🔔</button>
+
+<button class="icon-btn" onclick="showProfile()">👤</button>
+
+<div class="avatar" id="topAvatar">CS</div>
+
+</div>
+
 </header>
 
-<div id="menuBox" class="menu-box">
-<button onclick="goTo('tools')">🧰 Tools</button>
-<button onclick="goTo('notes')">📝 My Notes</button>
-<button onclick="goTo('pdf')">📄 PDF</button>
-<button onclick="goTo('links')">🔗 Useful Links</button>
-</div>
 
-<section class="hero">
-<div>
-<h1>Cyber Sentinel<br>Bangladesh</h1>
-<div class="hero-line"></div>
-</div>
-</section>
+<div class="layout">
 
-<main class="container">
+<!-- LEFT -->
 
-<section id="tools">
-<h2 class="section-title">Cyber Tools</h2>
+<aside class="sidebar">
 
-<div class="tool-grid">
+<div class="side-profile">
 
-<div class="tool" onclick="goTo('notes')">
-<div class="tool-icon">✎</div>
-<h3>Notes</h3>
-<p>যেকোনো লেখা Save, Edit ও Delete করুন।</p>
-</div>
+<div class="big-avatar" id="sideAvatar">CS</div>
 
-<div class="tool" onclick="goTo('pdf')">
-<div class="tool-icon">▣</div>
-<h3>Text → PDF</h3>
-<p>A4 professional PDF তৈরি করুন।</p>
-</div>
+<h3 id="sideName">Cyber User</h3>
 
-<div class="tool" onclick="goTo('qr')">
-<div class="tool-icon">▦</div>
-<h3>Text → QR</h3>
-<p>Text অথবা URL থেকে QR তৈরি করুন।</p>
-</div>
-
-<div class="tool" onclick="goTo('imageqr')">
-<div class="tool-icon">🖼️</div>
-<h3>Image → QR</h3>
-<p>ছোট image থেকে QR তৈরি করুন।</p>
-</div>
-
-<div class="tool" onclick="openLink('https://whoer.net/')">
-<div class="tool-icon">◎</div>
-<h3>My IP Check</h3>
-<p>নিজের public IP check করুন।</p>
-</div>
-
-<div class="tool" onclick="goTo('links')">
-<div class="tool-icon">⌁</div>
-<h3>IP Unblock</h3>
-<p>IP unblock guide ও copy link।</p>
-</div>
-
-</div>
-</section>
-
-<!-- NOTES -->
-
-<section id="notes">
-<h2 class="section-title">My Notes</h2>
-
-<div class="card">
-<h3>📝 Write a Note</h3>
-
-<input id="noteTitle" type="text" placeholder="Note title">
-
-<br><br>
-
-<textarea id="noteBody" placeholder="যেকোনো লেখা এখানে লিখুন..."></textarea>
-
-<button class="btn" onclick="saveNote()">Save Note</button>
-<button class="btn secondary" onclick="clearNote()">Clear</button>
-</div>
-
-<div id="notesList"></div>
-</section>
-
-<!-- PROFESSIONAL PDF -->
-
-<section id="pdf">
-<h2 class="section-title">Professional PDF</h2>
-
-<div class="card">
-
-<h3>📄 A4 Document Maker</h3>
-
-<input id="pdfTitle" type="text" placeholder="Document title">
-
-<br><br>
-
-<textarea id="pdfBody" placeholder="এখানে আপনার লেখা লিখুন..."></textarea>
-
-<div class="pdf-options">
-
-<div>
-<label>Page Size</label>
-<select id="pdfSize">
-<option value="A4">A4</option>
-</select>
-</div>
-
-<div>
-<label>Orientation</label>
-<select id="pdfOrientation">
-<option value="portrait">Portrait</option>
-<option value="landscape">Landscape</option>
-</select>
-</div>
-
-<div>
-<label>Font Size</label>
-<select id="pdfFontSize">
-<option value="14">14 px</option>
-<option value="16" selected>16 px</option>
-<option value="18">18 px</option>
-<option value="20">20 px</option>
-</select>
-</div>
-
-<div>
-<label>Margin</label>
-<select id="pdfMargin">
-<option value="15">15 mm</option>
-<option value="20" selected>20 mm</option>
-<option value="25">25 mm</option>
-</select>
-</div>
+<p>Cyber Sentinel Member</p>
 
 </div>
 
-<div class="pdf-buttons">
+<div class="menu">
 
-<button class="btn" onclick="previewPDF()">👁️ Preview</button>
+<button class="active" onclick="showHome()">🏠 Home</button>
 
-<button class="btn" onclick="createPDF()">🖨️ Save / Print PDF</button>
+<button onclick="showProfile()">👤 Profile</button>
 
-<button class="btn secondary" onclick="clearPDF()">Clear</button>
+<button onclick="showNotifications()">🔔 Notifications</button>
+
+<button onclick="openCreate()">✚ Create Post</button>
+
+<button onclick="logout()">⇥ Logout</button>
 
 </div>
 
-</div>
-</section>
+</aside>
 
-<!-- QR -->
 
-<section id="qr">
-<h2 class="section-title">Text → QR</h2>
+<!-- FEED -->
 
-<div class="card">
-<h3>🔳 QR Generator</h3>
+<main>
 
-<input id="qrText" type="text" placeholder="Text অথবা URL লিখুন">
+<div class="feed-title">
 
-<button class="btn" onclick="createQR()">Generate QR</button>
-<button class="btn secondary" onclick="downloadQR()">Download QR</button>
+<h1 id="feedTitle">News Feed</h1>
 
-<div class="qr-area">
-<canvas id="qrCanvas"></canvas>
-</div>
-</div>
-</section>
+<p id="feedDesc">Connect, share and learn together.</p>
 
-<!-- IMAGE QR -->
-
-<section id="imageqr">
-<h2 class="section-title">Image → QR</h2>
-
-<div class="card">
-<h3>🖼️ Image QR</h3>
-
-<input id="imageInput" type="file" accept="image/*">
-
-<img id="imagePreview" class="preview">
-
-<button class="btn" onclick="createImageQR()">Generate Image QR</button>
-
-<div class="qr-area">
-<canvas id="imageQRCanvas"></canvas>
 </div>
 
-<p style="color:#77988c;font-size:12px;margin-top:10px">
-ছোট image ব্যবহার করুন। বড় image-এর data QR-এর capacity ছাড়িয়ে যেতে পারে।
-</p>
-</div>
-</section>
 
-<!-- LINKS -->
-
-<section id="links">
-<h2 class="section-title">Useful Links</h2>
-
-<div class="card">
-<h3>🌐 My IP Check</h3>
-
-<p style="color:#86a99a;line-height:1.6">
-Whoer ব্যবহার করে নিজের public IP এবং connection information দেখতে পারবেন।
-</p>
-
-<button class="btn" onclick="openLink('https://whoer.net/')">
-Open IP Checker
-</button>
-
-<button class="btn secondary" onclick="copyLink('https://whoer.net/')">
-Copy Link
-</button>
-</div>
-
-<div class="card">
-<h3>🔓 IP Unblock Guide</h3>
-
-<p style="color:#86a99a;line-height:1.6">
-UpdraftPlus-এর official IP unblock guide।
-</p>
-
-<button class="btn" onclick="openLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
-Open Guide
-</button>
-
-<button class="btn secondary" onclick="copyLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
-Copy Link
-</button>
-</div>
-
-</section>
+<div id="feed"></div>
 
 </main>
 
-<footer>Cyber Sentinel Bangladesh</footer>
 
-<script>
+<!-- RIGHT -->
 
-/* MENU */
+<aside class="rightbar">
 
-function toggleMenu(){
-document.getElementById("menuBox").classList.toggle("show");
-}
+<div class="box">
 
-function goTo(id){
-const el=document.getElementById(id);
-if(el) el.scrollIntoView({behavior:"smooth"});
-document.getElementById("menuBox").classList.remove("show");
-}
+<h3>Suggested People</h3>
 
+<div id="people"></div>
 
-/* NOTES */
+</div>
 
-let editIndex=-1;
+<div class="box">
 
-function getNotes(){
-try{
-return JSON.parse(localStorage.getItem("csb_notes")||"[]");
-}catch(e){
-return [];
-}
-}
+<h3>Cyber Sentinel</h3>
 
-function saveNote(){
-
-const title=document.getElementById("noteTitle").value.trim();
-const body=document.getElementById("noteBody").value.trim();
-
-if(!title&&!body){
-alert("কিছু লিখুন।");
-return;
-}
-
-const notes=getNotes();
-
-const note={
-title:title||"Untitled",
-body:body,
-date:new Date().toLocaleString()
-};
-
-if(editIndex===-1){
-notes.unshift(note);
-}else{
-notes[editIndex]=note;
-editIndex=-1;
-}
-
-localStorage.setItem("csb_notes",JSON.stringify(notes));
-
-clearNote();
-renderNotes();
-
-alert("Note saved successfully!");
-}
-
-function renderNotes(){
-
-const box=document.getElementById("notesList");
-const notes=getNotes();
-
-box.innerHTML="";
-
-if(notes.length===0){
-box.innerHTML=`
-<div class="card">
-<p style="text-align:center;color:#688c7e">
-No notes saved yet.
+<p style="color:#668372;font-size:11px;line-height:1.7">
+A community-style platform for sharing knowledge,
+notes and cybersecurity learning resources.
 </p>
-</div>`;
-return;
-}
 
-notes.forEach((note,index)=>{
-
-const div=document.createElement("div");
-div.className="note";
-
-div.innerHTML=`
-<div class="note-title">${escapeHTML(note.title)}</div>
-<div class="note-date">${escapeHTML(note.date)}</div>
-<div class="note-text">${escapeHTML(note.body)}</div>
-
-<button class="btn secondary" onclick="editNote(${index})">
-Edit
-</button>
-
-<button class="btn danger" onclick="deleteNote(${index})">
-Delete
-</button>
-`;
-
-box.appendChild(div);
-
-});
-}
-
-function editNote(index){
-
-const notes=getNotes();
-const note=notes[index];
-
-document.getElementById("noteTitle").value=note.title;
-document.getElementById("noteBody").value=note.body;
-
-editIndex=index;
-
-document.getElementById("notes").scrollIntoView({
-behavior:"smooth"
-});
-}
-
-function deleteNote(index){
-
-if(!confirm("এই note delete করতে চান?")) return;
-
-const notes=getNotes();
-notes.splice(index,1);
-
-localStorage.setItem("csb_notes",JSON.stringify(notes));
-
-renderNotes();
-}
-
-function clearNote(){
-
-document.getElementById("noteTitle").value="";
-document.getElementById("noteBody").value="";
-editIndex=-1;
-}
-
-renderNotes();
-
-
-/* PDF */
-
-function getPDFSettings(){
-
-return {
-title:document.getElementById("pdfTitle").value.trim()||
-"Cyber Sentinel Bangladesh",
-
-body:document.getElementById("pdfBody").value.trim(),
-
-orientation:document.getElementById("pdfOrientation").value,
-
-fontSize:document.getElementById("pdfFontSize").value,
-
-margin:document.getElementById("pdfMargin").value
-};
-
-}
-
-function createPDF(){
-
-const s=getPDFSettings();
-
-if(!s.body){
-alert("PDF-এর জন্য কিছু লেখা লিখুন।");
-return;
-}
-
-const win=window.open("","_blank");
-
-if(!win){
-alert("Popup blocked হয়েছে। Browser popup allow করুন।");
-return;
-}
-
-win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-
-<title>${escapeHTML(s.title)}</title>
-
-<style>
-
-@page{
-size:A4 ${s.orientation};
-margin:${s.margin}mm;
-}
-
-*{box-sizing:border-box}
-
-body{
-margin:0;
-color:#111;
-font-family:Arial,"Noto Sans Bengali",sans-serif;
-font-size:${s.fontSize}px;
-line-height:1.75;
-}
-
-.header{
-border-bottom:2px solid #222;
-padding-bottom:12px;
-margin-bottom:25px;
-}
-
-.title{
-font-size:26px;
-font-weight:bold;
-}
-
-.brand{
-font-size:11px;
-color:#666;
-margin-top:4px;
-}
-
-.content{
-white-space:pre-wrap;
-overflow-wrap:break-word;
-}
-
-.footer{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-text-align:center;
-font-size:10px;
-color:#777;
-border-top:1px solid #ddd;
-padding-top:5px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="header">
-<div class="title">${escapeHTML(s.title)}</div>
-<div class="brand">Cyber Sentinel Bangladesh</div>
 </div>
 
-<div class="content">${escapeHTML(s.body)}</div>
+</aside>
 
-<div class="footer">
-Cyber Sentinel Bangladesh
 </div>
+
+</div>
+
+
+<!-- CREATE MODAL -->
+
+<div class="modal" id="createModal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<h2>Create Post</h2>
+
+<button class="close" onclick="closeCreate()">×</button>
+
+</div>
+
+<textarea
+id="postText"
+placeholder="What's on your mind?"></textarea>
+
+<div class="modal-footer">
+
+<button class="secondary" onclick="closeCreate()">
+CANCEL
+</button>
+
+<button class="primary" onclick="createPost()">
+POST
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
 
 <script>
-window.onload=function(){
-setTimeout(function(){
-window.print();
-},400);
-};
-<\/script>
 
-</body>
-</html>
-`);
+/* DATA */
 
-win.document.close();
-}
+let currentUser=
+ JSON.parse(localStorage.getItem("csb_user")||"null");
 
-function previewPDF(){
+let posts=
+ JSON.parse(localStorage.getItem("csb_posts")||"null")||[
+  {
+   id:1,
+   user:"Cyber Sentinel Bangladesh",
+   initials:"CS",
+   text:"Welcome to Cyber Sentinel Bangladesh! Share knowledge, notes and cybersecurity learning resources with the community. 🛡️",
+   time:"Just now",
+   likes:3,
+   liked:false,
+   comments:[
+    {user:"Rahim",text:"Welcome! 🔥"},
+    {user:"Nadia",text:"Great platform!"}
+   ]
+  },
+  {
+   id:2,
+   user:"Security Learner",
+   initials:"SL",
+   text:"Always test security tools only on systems you own or have permission to assess.",
+   time:"1 hour ago",
+   likes:8,
+   liked:false,
+   comments:[]
+  }
+ ];
 
-const s=getPDFSettings();
+let people=[
+ {name:"Rahim Ahmed",initials:"RA"},
+ {name:"Nadia Islam",initials:"NI"},
+ {name:"Cyber Student",initials:"CS"},
+ {name:"Security Lab",initials:"SL"}
+];
 
-if(!s.body){
-alert("Preview করার আগে কিছু লেখা দিন।");
-return;
-}
 
-const win=window.open("","_blank");
+/* LOGIN */
 
-if(!win){
-alert("Popup blocked হয়েছে।");
-return;
-}
+function login(){
 
-win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+ const name=
+  document.getElementById("loginName").value.trim();
 
-<title>PDF Preview</title>
+ const email=
+  document.getElementById("loginEmail").value.trim();
 
-<style>
+ if(!name||!email){
 
-@page{
-size:A4 ${s.orientation};
-margin:${s.margin}mm;
-}
+  alert("Enter your name and email.");
 
-body{
-margin:0;
-color:#111;
-font-family:Arial,"Noto Sans Bengali",sans-serif;
-font-size:${s.fontSize}px;
-line-height:1.75;
-}
+  return;
+ }
 
-.preview-bar{
-position:fixed;
-right:20px;
-top:15px;
-z-index:10;
-}
+ currentUser={
+  name,
+  email,
+  initials:name
+   .split(" ")
+   .map(x=>x[0])
+   .join("")
+   .slice(0,2)
+   .toUpperCase()
+ };
 
-.preview-bar button{
-background:#111;
-color:white;
-border:0;
-border-radius:8px;
-padding:11px 16px;
-cursor:pointer;
-}
+ localStorage.setItem(
+  "csb_user",
+  JSON.stringify(currentUser)
+ );
 
-.document{
-padding:0;
-}
-
-.header{
-border-bottom:2px solid #222;
-padding-bottom:12px;
-margin-bottom:25px;
-}
-
-.title{
-font-size:26px;
-font-weight:bold;
-}
-
-.brand{
-font-size:11px;
-color:#666;
-margin-top:4px;
-}
-
-.content{
-white-space:pre-wrap;
-overflow-wrap:break-word;
-}
-
-@media print{
-.preview-bar{display:none}
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="preview-bar">
-<button onclick="window.print()">
-🖨️ Print / Save PDF
-</button>
-</div>
-
-<div class="document">
-
-<div class="header">
-<div class="title">${escapeHTML(s.title)}</div>
-<div class="brand">Cyber Sentinel Bangladesh</div>
-</div>
-
-<div class="content">${escapeHTML(s.body)}</div>
-
-</div>
-
-</body>
-</html>
-`);
-
-win.document.close();
-}
-
-function clearPDF(){
-
-document.getElementById("pdfTitle").value="";
-document.getElementById("pdfBody").value="";
-document.getElementById("pdfOrientation").value="portrait";
-document.getElementById("pdfFontSize").value="16";
-document.getElementById("pdfMargin").value="20";
+ startApp();
 
 }
 
 
-/* QR */
+function logout(){
 
-function createQR(){
+ localStorage.removeItem("csb_user");
 
-const text=document.getElementById("qrText").value.trim();
-
-if(!text){
-alert("Text অথবা URL লিখুন।");
-return;
-}
-
-if(typeof QRious==="undefined"){
-alert("QR library load হয়নি। Internet connection check করুন।");
-return;
-}
-
-new QRious({
-element:document.getElementById("qrCanvas"),
-value:text,
-size:220,
-level:"H"
-});
-
-}
-
-function downloadQR(){
-
-const text=document.getElementById("qrText").value.trim();
-
-if(!text){
-alert("আগে QR তৈরি করুন।");
-return;
-}
-
-const canvas=document.getElementById("qrCanvas");
-
-const link=document.createElement("a");
-
-link.download="cyber-sentinel-qr.png";
-link.href=canvas.toDataURL("image/png");
-
-link.click();
-}
-
-
-/* IMAGE QR */
-
-let selectedImage=null;
-
-document.getElementById("imageInput").addEventListener(
-"change",
-function(){
-
-const file=this.files[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-selectedImage=e.target.result;
-
-const preview=document.getElementById("imagePreview");
-
-preview.src=selectedImage;
-preview.style.display="block";
-
-};
-
-reader.readAsDataURL(file);
-
-});
-
-
-function createImageQR(){
-
-if(!selectedImage){
-alert("আগে একটি image নির্বাচন করুন।");
-return;
-}
-
-if(typeof QRious==="undefined"){
-alert("QR library load হয়নি।");
-return;
-}
-
-try{
-
-new QRious({
-element:document.getElementById("imageQRCanvas"),
-value:selectedImage,
-size:220,
-level:"L"
-});
-
-}catch(e){
-
-alert("Image অনেক বড়। ছোট image ব্যবহার করুন।");
-
-}
+ location.reload();
 
 }
 
 
-/* LINKS */
+/* APP */
 
-function openLink(url){
+function startApp(){
 
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
-);
+ document.getElementById("loginPage")
+ .classList.remove("show");
 
-}
+ document.getElementById("app")
+ .style.display="block";
 
-function copyLink(url){
+ document.getElementById("topAvatar")
+ .textContent=currentUser.initials;
 
-if(navigator.clipboard){
+ document.getElementById("sideAvatar")
+ .textContent=currentUser.initials;
 
-navigator.clipboard.writeText(url)
-.then(function(){
-alert("Link copied!");
-})
-.catch(function(){
-fallbackCopy(url);
-});
+ document.getElementById("sideName")
+ .textContent=currentUser.name;
 
-}else{
-fallbackCopy(url);
-}
+ renderPeople();
 
-}
-
-function fallbackCopy(url){
-
-const input=document.createElement("input");
-
-input.value=url;
-
-document.body.appendChild(input);
-
-input.select();
-
-document.execCommand("copy");
-
-input.remove();
-
-alert("Link copied!");
+ renderFeed();
 
 }
 
 
-/* SECURITY */
+/* HOME */
+
+function showHome(){
+
+ document.getElementById("feedTitle")
+ .textContent="News Feed";
+
+ document.getElementById("feedDesc")
+ .textContent=
+  "Connect, share and learn together.";
+
+ renderFeed();
+
+}
+
+
+/* CREATE */
+
+function openCreate(){
+
+ document.getElementById("createModal")
+ .classList.add("show");
+
+ document.getElementById("postText").focus();
+
+}
+
+function closeCreate(){
+
+ document.getElementById("createModal")
+ .classList.remove("show");
+
+ document.getElementById("postText").value="";
+
+}
+
+
+function createPost(){
+
+ const text=
+  document.getElementById("postText")
+  .value.trim();
+
+ if(!text){
+
+  toast("Write something first.");
+
+  return;
+ }
+
+ const post={
+  id:Date.now(),
+  user:currentUser.name,
+  initials:currentUser.initials,
+  text,
+  time:"Just now",
+  likes:0,
+  liked:false,
+  comments:[]
+ };
+
+ posts.unshift(post);
+
+ savePosts();
+
+ closeCreate();
+
+ renderFeed();
+
+ toast("POST PUBLISHED");
+
+}
+
+
+/* FEED */
+
+function renderFeed(list=posts){
+
+ const feed=document.getElementById("feed");
+
+ feed.innerHTML="";
+
+ if(!list.length){
+
+  feed.innerHTML=`
+
+  <div class="box" style="text-align:center">
+   <p style="color:#789584">
+    No posts found.
+   </p>
+  </div>
+
+  `;
+
+  return;
+ }
+
+ list.forEach(post=>{
+
+  const el=document.createElement("article");
+
+  el.className="post";
+
+  el.innerHTML=`
+
+  <div class="post-head">
+
+   <div class="avatar">${escapeHTML(post.initials)}</div>
+
+   <div class="post-user">
+
+    <strong>${escapeHTML(post.user)}</strong>
+
+    <small>${escapeHTML(post.time)} · 🌐</small>
+
+   </div>
+
+   <button class="more">•••</button>
+
+  </div>
+
+  <div class="post-body">
+
+   <p>${escapeHTML(post.text)}</p>
+
+  </div>
+
+  <div class="stats">
+
+   <span>💚 ${post.likes} likes</span>
+
+   <span>${post.comments.length} comments</span>
+
+  </div>
+
+  <div class="post-buttons">
+
+   <button
+    class="${post.liked?"liked":""}"
+    onclick="toggleLike(${post.id})">
+    ${post.liked?"💚":"♡"} Like
+   </button>
+
+   <button onclick="focusComment(${post.id)">
+    💬 Comment
+   </button>
+
+   <button onclick="sharePost(${post.id})">
+    ↗ Share
+   </button>
+
+  </div>
+
+  <div class="comments">
+
+   ${post.comments.map(c=>`
+
+    <div class="comment">
+     <b>${escapeHTML(c.user)}</b><br>
+     ${escapeHTML(c.text)}
+    </div>
+
+   `).join("")}
+
+   <div class="comment-form">
+
+    <input
+     id="comment-${post.id}"
+     placeholder="Write a comment...">
+
+    <button onclick="addComment(${post.id})">
+     ➤
+    </button>
+
+   </div>
+
+  </div>
+
+  `;
+
+  feed.appendChild(el);
+
+ });
+
+}
+
+
+/* LIKE */
+
+function toggleLike(id){
+
+ const post=
+  posts.find(p=>p.id===id);
+
+ if(!post)return;
+
+ post.liked=!post.liked;
+
+ post.likes+=post.liked?1:-1;
+
+ savePosts();
+
+ renderFeed();
+
+}
+
+
+/* COMMENT */
+
+function addComment(id){
+
+ const input=
+  document.getElementById("comment-"+id);
+
+ const text=input.value.trim();
+
+ if(!text)return;
+
+ const post=
+  posts.find(p=>p.id===id);
+
+ post.comments.push({
+  user:currentUser.name,
+  text
+ });
+
+ savePosts();
+
+ renderFeed();
+
+}
+
+
+function focusComment(id){
+
+ setTimeout(()=>{
+
+  const el=
+   document.getElementById("comment-"+id);
+
+  if(el)el.focus();
+
+ },50);
+
+}
+
+
+/* SHARE */
+
+function sharePost(id){
+
+ const post=
+  posts.find(p=>p.id===id);
+
+ const text=
+  post.user+": "+post.text;
+
+ if(navigator.share){
+
+  navigator.share({
+   title:"Cyber Sentinel Bangladesh",
+   text
+  });
+
+ }else{
+
+  navigator.clipboard.writeText(text);
+
+  toast("POST COPIED");
+
+ }
+
+}
+
+
+/* PROFILE */
+
+function showProfile(){
+
+ document.getElementById("feedTitle")
+ .textContent="My Profile";
+
+ document.getElementById("feedDesc")
+ .textContent="Your Cyber Sentinel profile.";
+
+ const mine=
+  posts.filter(p=>p.user===currentUser.name);
+
+ const feed=document.getElementById("feed");
+
+ feed.innerHTML=`
+
+ <div class="profile-cover"></div>
+
+ <div class="profile-card">
+
+  <div class="profile-avatar">
+   ${escapeHTML(currentUser.initials)}
+  </div>
+
+  <h2>${escapeHTML(currentUser.name)}</h2>
+
+  <p>${escapeHTML(currentUser.email)}</p>
+
+  <p>Cyber Sentinel Bangladesh member</p>
+
+ </div>
+
+ <h3 style="color:#00ff88;margin:15px 0">
+ My Posts
+ </h3>
+
+ `;
+
+ mine.forEach(post=>{
+
+  const old=feed.innerHTML;
+
+  const temp=document.createElement("div");
+
+  temp.innerHTML=postCard(post);
+
+  feed.innerHTML=old+temp.innerHTML;
+
+ });
+
+}
+
+
+/* PROFILE POST CARD */
+
+function postCard(post){
+
+ return `
+
+ <article class="post">
+
+  <div class="post-head">
+
+   <div class="avatar">${escapeHTML(post.initials)}</div>
+
+   <div class="post-user">
+
+    <strong>${escapeHTML(post.user)}</strong>
+
+    <small>${escapeHTML(post.time)}</small>
+
+   </div>
+
+  </div>
+
+  <div class="post-body">
+
+   <p>${escapeHTML(post.text)}</p>
+
+  </div>
+
+  <div class="stats">
+
+   <span>💚 ${post.likes} likes</span>
+
+   <span>${post.comments.length} comments</span>
+
+  </div>
+
+ </article>
+
+ `;
+
+}
+
+
+/* NOTIFICATIONS */
+
+function showNotifications(){
+
+ document.getElementById("feedTitle")
+ .textContent="Notifications";
+
+ document.getElementById("feedDesc")
+ .textContent="Your latest activity.";
+
+ document.getElementById("feed").innerHTML=`
+
+ <div class="box">
+
+  <div class="notification">
+   🔔 <b>Cyber Sentinel</b> welcomed you to the network.
+  </div>
+
+  <div class="notification">
+   💚 Your community is ready for new posts.
+  </div>
+
+  <div class="notification">
+   🛡️ Remember to use security tools only on authorized targets.
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+/* PEOPLE */
+
+function renderPeople(){
+
+ const box=
+  document.getElementById("people");
+
+ box.innerHTML="";
+
+ people.forEach(p=>{
+
+  const el=document.createElement("div");
+
+  el.className="person";
+
+  el.innerHTML=`
+
+   <div class="mini">${p.initials}</div>
+
+   <div>
+    <strong>${p.name}</strong>
+    <small>Suggested</small>
+   </div>
+
+   <button
+    class="follow"
+    onclick="follow(this)">
+    FOLLOW
+   </button>
+
+  `;
+
+  box.appendChild(el);
+
+ });
+
+}
+
+
+function follow(btn){
+
+ btn.textContent=
+  btn.textContent==="FOLLOW"
+  ?"FOLLOWING"
+  :"FOLLOW";
+
+ toast(
+  btn.textContent==="FOLLOWING"
+  ?"FOLLOWED"
+  :"UNFOLLOWED"
+ );
+
+}
+
+
+/* SEARCH */
+
+function searchPosts(){
+
+ const q=
+  document.getElementById("search")
+  .value.toLowerCase().trim();
+
+ if(!q){
+
+  showHome();
+
+  return;
+
+ }
+
+ const result=
+  posts.filter(p=>
+   p.text.toLowerCase().includes(q)||
+   p.user.toLowerCase().includes(q)
+  );
+
+ document.getElementById("feedTitle")
+ .textContent="Search Results";
+
+ document.getElementById("feedDesc")
+ .textContent=
+  result.length+" matching posts";
+
+ renderFeed(result);
+
+}
+
+
+/* STORAGE */
+
+function savePosts(){
+
+ localStorage.setItem(
+  "csb_posts",
+  JSON.stringify(posts)
+ );
+
+}
+
+
+/* HELPERS */
 
 function escapeHTML(value){
 
-const div=document.createElement("div");
+ const div=document.createElement("div");
 
-div.textContent=value;
+ div.textContent=value;
 
-return div.innerHTML;
+ return div.innerHTML;
+
+}
+
+
+function toast(message){
+
+ const t=
+  document.getElementById("toast");
+
+ t.textContent=message;
+
+ t.classList.add("show");
+
+ setTimeout(()=>{
+  t.classList.remove("show");
+ },1800);
+
+}
+
+
+/* START */
+
+if(currentUser){
+
+ startApp();
 
 }
 
 </script>
-
-<!-- QR LIBRARY -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 </body>
 </html>
