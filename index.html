@@ -1,82 +1,1303 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyber Sentinel Bangladesh</title>
-  <style>
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#07110d;color:#fff}
-    .hidden{display:none!important}.top{position:sticky;top:0;background:#0a1812;padding:15px;display:flex;justify-content:space-between;border-bottom:1px solid #1d3b2d}.logo{color:#22e58b;font-size:22px;font-weight:bold}
-    .container{max-width:700px;margin:auto;padding:15px}.card{background:#0d1c16;border:1px solid #1f4938;border-radius:18px;padding:16px;margin-bottom:15px}.auth{max-width:420px;margin:60px auto}.auth h1{text-align:center;color:#22e58b}
-    input,textarea{width:100%;padding:14px;margin:8px 0;border-radius:12px;border:1px solid #285642;background:#08130f;color:white;font-size:16px}textarea{min-height:100px;resize:vertical}
-    button{border:0;border-radius:12px;padding:12px 16px;background:#20d884;color:#032016;font-weight:bold;font-size:15px;cursor:pointer}.btn2{background:#18352a;color:#dfffee}.row{display:flex;gap:10px}.row button{flex:1}
-    .postHead{display:flex;align-items:center;gap:10px}.avatar{width:42px;height:42px;border-radius:50%;background:#22e58b;color:#062215;display:flex;align-items:center;justify-content:center;font-weight:bold}.post{white-space:pre-wrap;font-size:16px;line-height:1.5;margin:14px 0}.meta{color:#9cc8b3;font-size:12px}.actions{display:flex;gap:8px;margin-top:10px}.actions button{background:#10271d;color:#bff5d7}.comment{padding:10px;border-top:1px solid #1b3d2e;font-size:14px}.comment b{color:#21df8a}.profileBox{text-align:center}.profileBox .avatar{margin:0 auto 10px;width:70px;height:70px;font-size:26px}.msg{text-align:center;margin:10px;color:#ffb3b3}.ok{color:#7dffb3}.title{font-size:26px;color:#27e695;text-align:center;margin:20px 0}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSB Social</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#050b09;
+  color:#fff;
+}
+
+button,input,textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+/* LOGIN */
+
+#authPage{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#063d29 0,#050b09 45%,#020504 100%);
+}
+
+.authBox{
+  width:100%;
+  max-width:430px;
+  padding:30px;
+  border:1px solid #08754c;
+  border-radius:25px;
+  background:rgba(3,18,13,.95);
+  box-shadow:0 0 35px rgba(0,255,140,.18);
+}
+
+.logo{
+  text-align:center;
+  color:#00ff88;
+  font-size:32px;
+  font-weight:bold;
+  margin-bottom:8px;
+  text-shadow:0 0 15px #00ff88;
+}
+
+.subtitle{
+  text-align:center;
+  color:#8da99c;
+  margin-bottom:25px;
+}
+
+.authBox input{
+  width:100%;
+  padding:15px;
+  margin:7px 0;
+  border:1px solid #164d39;
+  border-radius:12px;
+  outline:none;
+  background:#07130f;
+  color:white;
+  font-size:16px;
+}
+
+.authBox input:focus{
+  border-color:#00ff88;
+  box-shadow:0 0 10px rgba(0,255,136,.15);
+}
+
+.mainBtn{
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border:0;
+  border-radius:12px;
+  background:#00e878;
+  color:#001b0e;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.mainBtn:hover{
+  background:#00ff91;
+}
+
+.switch{
+  text-align:center;
+  margin-top:20px;
+  color:#8da99c;
+}
+
+.switch span{
+  color:#00ff88;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.error{
+  color:#ff6969;
+  text-align:center;
+  margin-top:12px;
+  min-height:20px;
+}
+
+/* APP */
+
+#app{
+  display:none;
+  min-height:100vh;
+}
+
+.topbar{
+  height:65px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  background:rgba(2,12,8,.96);
+  border-bottom:1px solid #0b4c32;
+  backdrop-filter:blur(10px);
+}
+
+.brand{
+  color:#00ff88;
+  font-size:22px;
+  font-weight:bold;
+  text-shadow:0 0 12px rgba(0,255,136,.5);
+}
+
+.topActions{
+  display:flex;
+  gap:8px;
+}
+
+.iconBtn{
+  border:1px solid #164d39;
+  background:#07130f;
+  color:#00ff88;
+  padding:9px 13px;
+  border-radius:10px;
+}
+
+.container{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  padding:20px 14px 80px;
+}
+
+/* PROFILE */
+
+.profile{
+  padding:22px;
+  margin-bottom:18px;
+  border:1px solid #104e37;
+  border-radius:20px;
+  background:#06120e;
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#00c96b;
+  color:#001b0e;
+  font-size:25px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.profileName{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.profileEmail{
+  color:#7f998f;
+  font-size:14px;
+  margin-top:4px;
+}
+
+/* CREATE POST */
+
+.create{
+  padding:18px;
+  margin-bottom:20px;
+  border:1px solid #104e37;
+  border-radius:20px;
+  background:#06120e;
+}
+
+.create h3{
+  color:#00ff88;
+  margin-bottom:12px;
+}
+
+.create input,
+.create textarea{
+  width:100%;
+  background:#020906;
+  color:white;
+  border:1px solid #164d39;
+  border-radius:12px;
+  padding:13px;
+  outline:none;
+  margin-bottom:10px;
+}
+
+.create textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.create input:focus,
+.create textarea:focus{
+  border-color:#00ff88;
+}
+
+/* POSTS */
+
+.post{
+  background:#06120e;
+  border:1px solid #104e37;
+  border-radius:20px;
+  margin-bottom:18px;
+  overflow:hidden;
+}
+
+.postHead{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:16px;
+}
+
+.smallAvatar{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#00b961;
+  color:#001b0e;
+  font-weight:bold;
+}
+
+.postUser{
+  font-weight:bold;
+}
+
+.postTime{
+  color:#71877e;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.postBody{
+  padding:0 16px 15px;
+}
+
+.postTitle{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:8px;
+  color:#00ff88;
+}
+
+.postText{
+  color:#d9e5df;
+  white-space:pre-wrap;
+  line-height:1.5;
+}
+
+.postActions{
+  display:flex;
+  border-top:1px solid #0c3022;
+}
+
+.action{
+  flex:1;
+  padding:13px;
+  border:0;
+  background:transparent;
+  color:#91aaa0;
+}
+
+.action:hover{
+  background:#092219;
+  color:#00ff88;
+}
+
+.action.liked{
+  color:#00ff88;
+}
+
+/* COMMENTS */
+
+.comments{
+  border-top:1px solid #0c3022;
+  padding:12px 16px;
+}
+
+.comment{
+  padding:8px 0;
+  color:#c6d5cf;
+  font-size:14px;
+}
+
+.comment b{
+  color:#00ff88;
+}
+
+.commentForm{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.commentForm input{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #164d39;
+  background:#020906;
+  color:white;
+  outline:none;
+}
+
+.commentForm button{
+  border:0;
+  border-radius:10px;
+  padding:0 15px;
+  background:#00d875;
+  font-weight:bold;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  color:#71877e;
+  padding:45px 10px;
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#00ff88;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+  .authBox{
+    padding:23px;
+  }
+
+  .brand{
+    font-size:19px;
+  }
+
+  .container{
+    padding-left:9px;
+    padding-right:9px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-<div id="authPage" class="container auth">
-  <div class="card">
-    <h1>🛡 CSB Social</h1>
-    <p style="text-align:center;color:#9cc8b3">Cyber Sentinel Bangladesh</p>
-    <div id="loginBox">
-      <input id="loginEmail" type="email" placeholder="Email">
-      <input id="loginPass" type="password" placeholder="Password">
-      <button onclick="login()" style="width:100%">Login</button>
-      <p style="text-align:center">নতুন? <span onclick="showRegister()" style="color:#22e58b;cursor:pointer">Register</span></p>
+<!-- ================= AUTH ================= -->
+
+<section id="authPage">
+
+  <div class="authBox">
+
+    <div class="logo">🛡️ CSB Social</div>
+    <div class="subtitle">Cyber Sentinel Bangladesh</div>
+
+    <div id="loginForm">
+
+      <input id="loginEmail"
+             type="email"
+             placeholder="Email">
+
+      <input id="loginPassword"
+             type="password"
+             placeholder="Password">
+
+      <button class="mainBtn" onclick="login()">
+        Login
+      </button>
+
+      <div class="switch">
+        নতুন account?
+        <span onclick="showSignup()">Sign Up</span>
+      </div>
+
     </div>
-    <div id="registerBox" class="hidden">
-      <input id="regName" placeholder="Full Name">
-      <input id="regEmail" type="email" placeholder="Email">
-      <input id="regPass" type="password" placeholder="Password (6+)">
-      <button onclick="register()" style="width:100%">Create Account</button>
-      <p style="text-align:center">আগে account আছে? <span onclick="showLogin()" style="color:#22e58b;cursor:pointer">Login</span></p>
+
+
+    <div id="signupForm" style="display:none">
+
+      <input id="signupName"
+             type="text"
+             placeholder="Your name">
+
+      <input id="signupEmail"
+             type="email"
+             placeholder="Email">
+
+      <input id="signupPassword"
+             type="password"
+             placeholder="Password (minimum 6 characters)">
+
+      <button class="mainBtn" onclick="signup()">
+        Create Account
+      </button>
+
+      <div class="switch">
+        আগে থেকেই account আছে?
+        <span onclick="showLogin()">Login</span>
+      </div>
+
     </div>
-    <div id="msg" class="msg"></div>
+
+    <div id="authError" class="error"></div>
+
   </div>
-</div>
 
-<div id="appPage" class="hidden">
-  <div class="top">
-    <div class="logo">🛡 CSB</div>
-    <button onclick="logout()">Logout</button>
-  </div>
-  <div class="container">
-    <div class="card profileBox">
-      <div class="avatar" id="avatar">U</div>
-      <h2 id="userName">User</h2>
-      <div id="userEmail" class="meta"></div>
+</section>
+
+
+<!-- ================= APP ================= -->
+
+<section id="app">
+
+  <header class="topbar">
+
+    <div class="brand">
+      🛡️ CSB Social
     </div>
 
-    <div class="card">
-      <h3>নতুন Post</h3>
-      <textarea id="postText" placeholder="কি ভাবছেন?"></textarea>
-      <button onclick="createPost()" style="width:100%">Post Publish</button>
+    <div class="topActions">
+      <button class="iconBtn" onclick="logout()">
+        Logout
+      </button>
     </div>
 
-    <div class="title">News Feed</div>
-    <div id="feed"></div>
-  </div>
-</div>
+  </header>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, deleteDoc, updateDoc, onSnapshot, query, orderBy, serverTimestamp, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-const firebaseConfig={apiKey:"AIzaSyBU-KZ_CRAS_AKNfgJjimU-f-74qoJHUko",authDomain:"facebook-de936.firebaseapp.com",projectId:"facebook-de936",storageBucket:"facebook-de936.firebasestorage.app",messagingSenderId:"575188853255",appId:"1:575188853255:web:52a913cdd44243baa340a2",measurementId:"G-JSFH705D24"};
-const app=initializeApp(firebaseConfig); const auth=getAuth(app); const db=getFirestore(app); let currentUser=null;
-const $=id=>document.getElementById(id); const msg=t=>{$('msg').innerText=t;setTimeout(()=>$('msg').innerText='',3000)};
-window.showRegister=()=>{$('loginBox').classList.add('hidden');$('registerBox').classList.remove('hidden')}; window.showLogin=()=>{$('registerBox').classList.add('hidden');$('loginBox').classList.remove('hidden')};
-window.register=async()=>{const name=$('regName').value.trim(),email=$('regEmail').value.trim(),pass=$('regPass').value;if(!name||!email||pass.length<6)return msg('সব তথ্য দিন, password 6+');try{const r=await createUserWithEmailAndPassword(auth,email,pass);await setDoc(doc(db,'users',r.user.uid),{name,email,createdAt:serverTimestamp()});msg('Account তৈরি হয়েছে')}catch(e){msg(e.message)}};
-window.login=async()=>{try{await signInWithEmailAndPassword(auth,$('loginEmail').value,$('loginPass').value)}catch(e){msg('Login failed')}}; window.logout=()=>signOut(auth);
-window.createPost=async()=>{const text=$('postText').value.trim();if(!text)return;await addDoc(collection(db,'posts'),{uid:currentUser.uid,name:currentUser.name,text,likes:[],createdAt:serverTimestamp()});$('postText').value=''};
-window.likePost=async(id,likes)=>{const ref=doc(db,'posts',id);const has=likes.includes(currentUser.uid);await updateDoc(ref,{likes:has?arrayRemove(currentUser.uid):arrayUnion(currentUser.uid)})};
-window.deletePost=async id=>{if(confirm('Delete post?'))await deleteDoc(doc(db,'posts',id))};
-window.commentPost=async id=>{const text=prompt('Comment লিখুন');if(text&&text.trim())await addDoc(collection(db,'posts',id,'comments'),{uid:currentUser.uid,name:currentUser.name,text:text.trim(),createdAt:serverTimestamp()})};
-function listenPosts(){const q=query(collection(db,'posts'),orderBy('createdAt','desc'));onSnapshot(q,s=>{const feed=$('feed');feed.innerHTML='';s.forEach(d=>{const p=d.data(),likes=p.likes||[];const div=document.createElement('div');div.className='card';const own=p.uid===currentUser.uid;div.innerHTML=`<div class="postHead"><div class="avatar">${(p.name||'U')[0].toUpperCase()}</div><div><b>${p.name}</b><div class="meta">${p.createdAt?.toDate?.().toLocaleString()||'Just now'}</div></div></div><div class="post">${escapeHtml(p.text)}</div><div class="actions"><button onclick="likePost('${d.id}',${JSON.stringify(likes).replace(/"/g,'&quot;')})">❤️ ${likes.length}</button><button onclick="commentPost('${d.id}')">💬 Comment</button>${own?`<button onclick="deletePost('${d.id}')">🗑 Delete</button>`:''}</div><div id="c-${d.id}"></div>`;feed.appendChild(div);onSnapshot(collection(db,'posts',d.id,'comments'),cs=>{const c=$('c-'+d.id);c.innerHTML='';cs.forEach(x=>{const z=x.data();c.innerHTML+=`<div class="comment"><b>${z.name}</b><br>${escapeHtml(z.text)}</div>`})})})})}
-function escapeHtml(t){return t.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-onAuthStateChanged(auth,async u=>{if(u){const s=await getDoc(doc(db,'users',u.uid));const data=s.data()||{name:'User',email:u.email};currentUser={uid:u.uid,...data};$('authPage').classList.add('hidden');$('appPage').classList.remove('hidden');$('userName').innerText=currentUser.name;$('userEmail').innerText=currentUser.email;$('avatar').innerText=currentUser.name[0].toUpperCase();listenPosts()}else{$('appPage').classList.add('hidden');$('authPage').classList.remove('hidden')}});
+  <main class="container">
+
+    <!-- PROFILE -->
+
+    <div class="profile">
+
+      <div class="avatar" id="profileAvatar">
+        U
+      </div>
+
+      <div class="profileName" id="profileName">
+        User
+      </div>
+
+      <div class="profileEmail" id="profileEmail">
+        email
+      </div>
+
+    </div>
+
+
+    <!-- CREATE -->
+
+    <div class="create">
+
+      <h3>📝 Create Post</h3>
+
+      <input id="postTitle"
+             placeholder="Post title">
+
+      <textarea id="postText"
+                placeholder="What's on your mind?"></textarea>
+
+      <button class="mainBtn"
+              onclick="createPost()">
+        Publish Post
+      </button>
+
+    </div>
+
+
+    <!-- FEED -->
+
+    <div id="feed">
+      <div class="loading">
+        Loading posts...
+      </div>
+    </div>
+
+  </main>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBU-KZ_CRAS_AKNfgJjimU-f-74qoJHUko",
+  authDomain: "facebook-de936.firebaseapp.com",
+  projectId: "facebook-de936",
+  storageBucket: "facebook-de936.firebasestorage.app",
+  messagingSenderId: "575188853255",
+  appId: "1:575188853255:web:52a913cdd44243baa340a2",
+  measurementId: "G-JSFH705D24"
+};
+
+
+/* =========================================
+   INITIALIZE FIREBASE
+========================================= */
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+
+/* =========================================
+   AUTH UI
+========================================= */
+
+function showSignup(){
+
+  document.getElementById("loginForm").style.display="none";
+
+  document.getElementById("signupForm").style.display="block";
+
+  document.getElementById("authError").innerText="";
+}
+
+
+function showLogin(){
+
+  document.getElementById("signupForm").style.display="none";
+
+  document.getElementById("loginForm").style.display="block";
+
+  document.getElementById("authError").innerText="";
+}
+
+
+/* =========================================
+   SIGN UP
+========================================= */
+
+async function signup(){
+
+  const name =
+    document.getElementById("signupName").value.trim();
+
+  const email =
+    document.getElementById("signupEmail").value.trim();
+
+  const password =
+    document.getElementById("signupPassword").value;
+
+  const error =
+    document.getElementById("authError");
+
+
+  if(!name || !email || !password){
+
+    error.innerText="সবগুলো ঘর পূরণ করো।";
+    return;
+  }
+
+
+  if(password.length < 6){
+
+    error.innerText="Password কমপক্ষে ৬ characters হতে হবে।";
+    return;
+  }
+
+
+  try{
+
+    const result =
+      await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    const user = result.user;
+
+
+    await db.collection("users")
+      .doc(user.uid)
+      .set({
+
+        uid:user.uid,
+        name:name,
+        email:email,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+
+      });
+
+
+    error.innerText="";
+
+  }catch(e){
+
+    error.innerText = firebaseError(e);
+
+  }
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function login(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const error =
+    document.getElementById("authError");
+
+
+  if(!email || !password){
+
+    error.innerText="Email এবং password দাও।";
+    return;
+  }
+
+
+  try{
+
+    await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+
+    error.innerText="";
+
+  }catch(e){
+
+    error.innerText = firebaseError(e);
+
+  }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout(){
+
+  await auth.signOut();
+
+}
+
+
+/* =========================================
+   FIREBASE ERROR
+========================================= */
+
+function firebaseError(error){
+
+  const code = error.code || "";
+
+  if(code.includes("invalid-email"))
+    return "Email address ঠিক নয়।";
+
+  if(code.includes("user-not-found"))
+    return "এই email দিয়ে account নেই।";
+
+  if(code.includes("wrong-password"))
+    return "Password ভুল।";
+
+  if(code.includes("email-already-in-use"))
+    return "এই email দিয়ে account আগে থেকেই আছে।";
+
+  if(code.includes("weak-password"))
+    return "Password আরও শক্ত করো।";
+
+  return error.message || "Something went wrong.";
+
+}
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+auth.onAuthStateChanged(async(user)=>{
+
+  if(user){
+
+    document.getElementById("authPage").style.display="none";
+
+    document.getElementById("app").style.display="block";
+
+    await loadProfile(user);
+
+    loadPosts();
+
+  }else{
+
+    document.getElementById("authPage").style.display="flex";
+
+    document.getElementById("app").style.display="none";
+
+  }
+
+});
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+async function loadProfile(user){
+
+  let name = user.email.split("@")[0];
+
+  try{
+
+    const snap =
+      await db.collection("users")
+      .doc(user.uid)
+      .get();
+
+    if(snap.exists){
+
+      const data = snap.data();
+
+      name = data.name || name;
+
+    }
+
+  }catch(e){
+
+    console.log(e);
+
+  }
+
+
+  document.getElementById("profileName").innerText=name;
+
+  document.getElementById("profileEmail").innerText=user.email;
+
+  document.getElementById("profileAvatar").innerText=
+    name.charAt(0).toUpperCase();
+
+}
+
+
+/* =========================================
+   CREATE POST
+========================================= */
+
+async function createPost(){
+
+  const user = auth.currentUser;
+
+  if(!user) return;
+
+
+  const title =
+    document.getElementById("postTitle").value.trim();
+
+  const text =
+    document.getElementById("postText").value.trim();
+
+
+  if(!title || !text){
+
+    alert("Title এবং post লিখো।");
+    return;
+  }
+
+
+  let name = user.email.split("@")[0];
+
+
+  try{
+
+    const profile =
+      await db.collection("users")
+      .doc(user.uid)
+      .get();
+
+    if(profile.exists){
+
+      name =
+        profile.data().name || name;
+
+    }
+
+
+    await db.collection("posts").add({
+
+      uid:user.uid,
+
+      name:name,
+
+      title:title,
+
+      text:text,
+
+      likes:[],
+
+      createdAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+
+    document.getElementById("postTitle").value="";
+
+    document.getElementById("postText").value="";
+
+
+    loadPosts();
+
+
+  }catch(e){
+
+    alert("Post করা যায়নি: "+e.message);
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD POSTS
+========================================= */
+
+let postsListener = null;
+
+
+function loadPosts(){
+
+  const feed =
+    document.getElementById("feed");
+
+  feed.innerHTML =
+    '<div class="loading">Loading posts...</div>';
+
+
+  if(postsListener){
+
+    postsListener();
+
+  }
+
+
+  postsListener =
+    db.collection("posts")
+      .orderBy("createdAt","desc")
+      .onSnapshot(
+
+        snapshot=>{
+
+          if(snapshot.empty){
+
+            feed.innerHTML =
+              '<div class="empty">এখনো কোনো post নেই।<br>প্রথম post তুমি করো! 🚀</div>';
+
+            return;
+          }
+
+
+          feed.innerHTML="";
+
+
+          snapshot.forEach(doc=>{
+
+            renderPost(
+              doc.id,
+              doc.data()
+            );
+
+          });
+
+        },
+
+        error=>{
+
+          console.error(error);
+
+          feed.innerHTML =
+            '<div class="empty">Posts load করা যায়নি।</div>';
+
+        }
+
+      );
+
+}
+
+
+/* =========================================
+   RENDER POST
+========================================= */
+
+function renderPost(id,data){
+
+  const feed =
+    document.getElementById("feed");
+
+  const user =
+    auth.currentUser;
+
+
+  const likes =
+    Array.isArray(data.likes)
+      ? data.likes
+      : [];
+
+
+  const liked =
+    user && likes.includes(user.uid);
+
+
+  const time =
+    data.createdAt
+      ? data.createdAt.toDate().toLocaleString()
+      : "Just now";
+
+
+  const article =
+    document.createElement("article");
+
+  article.className="post";
+
+
+  article.innerHTML=`
+
+    <div class="postHead">
+
+      <div class="smallAvatar">
+        ${(data.name || "U").charAt(0).toUpperCase()}
+      </div>
+
+      <div>
+
+        <div class="postUser">
+          ${escapeHTML(data.name || "User")}
+        </div>
+
+        <div class="postTime">
+          ${time}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="postBody">
+
+      <div class="postTitle">
+        ${escapeHTML(data.title || "")}
+      </div>
+
+      <div class="postText">
+        ${escapeHTML(data.text || "")}
+      </div>
+
+    </div>
+
+
+    <div class="postActions">
+
+      <button
+        class="action ${liked ? "liked" : ""}"
+        onclick="toggleLike('${id}')">
+
+        ${liked ? "❤️" : "🤍"}
+        ${likes.length}
+
+      </button>
+
+
+      <button
+        class="action"
+        onclick="focusComment('${id}')">
+
+        💬 Comment
+
+      </button>
+
+    </div>
+
+
+    <div class="comments">
+
+      <div id="comments-${id}">
+        <span style="color:#61776e">
+          Loading comments...
+        </span>
+      </div>
+
+
+      <div class="commentForm">
+
+        <input
+          id="commentInput-${id}"
+          placeholder="Write a comment...">
+
+        <button onclick="addComment('${id}')">
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  feed.appendChild(article);
+
+
+  loadComments(id);
+
+}
+
+
+/* =========================================
+   LIKE
+========================================= */
+
+async function toggleLike(postId){
+
+  const user = auth.currentUser;
+
+  if(!user) return;
+
+
+  const ref =
+    db.collection("posts").doc(postId);
+
+
+  try{
+
+    const snap =
+      await ref.get();
+
+    if(!snap.exists) return;
+
+
+    const likes =
+      snap.data().likes || [];
+
+
+    if(likes.includes(user.uid)){
+
+      await ref.update({
+
+        likes:
+          firebase.firestore.FieldValue.arrayRemove(
+            user.uid
+          )
+
+      });
+
+    }else{
+
+      await ref.update({
+
+        likes:
+          firebase.firestore.FieldValue.arrayUnion(
+            user.uid
+          )
+
+      });
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}
+
+
+/* =========================================
+   COMMENTS
+========================================= */
+
+function loadComments(postId){
+
+  db.collection("posts")
+    .doc(postId)
+    .collection("comments")
+    .orderBy("createdAt","asc")
+    .onSnapshot(snapshot=>{
+
+      const box =
+        document.getElementById(
+          "comments-"+postId
+        );
+
+
+      if(!box) return;
+
+
+      if(snapshot.empty){
+
+        box.innerHTML="";
+
+        return;
+
+      }
+
+
+      box.innerHTML="";
+
+
+      snapshot.forEach(doc=>{
+
+        const data=doc.data();
+
+        const div=
+          document.createElement("div");
+
+        div.className="comment";
+
+        div.innerHTML=
+          "<b>"+
+          escapeHTML(data.name || "User")+
+          "</b>: "+
+          escapeHTML(data.text || "");
+
+        box.appendChild(div);
+
+      });
+
+    });
+
+}
+
+
+async function addComment(postId){
+
+  const user =
+    auth.currentUser;
+
+  if(!user) return;
+
+
+  const input =
+    document.getElementById(
+      "commentInput-"+postId
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text) return;
+
+
+  let name =
+    user.email.split("@")[0];
+
+
+  try{
+
+    const profile =
+      await db.collection("users")
+      .doc(user.uid)
+      .get();
+
+
+    if(profile.exists){
+
+      name =
+        profile.data().name || name;
+
+    }
+
+
+    await db.collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .add({
+
+        uid:user.uid,
+
+        name:name,
+
+        text:text,
+
+        createdAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+
+      });
+
+
+    input.value="";
+
+
+  }catch(e){
+
+    alert("Comment করা যায়নি: "+e.message);
+
+  }
+
+}
+
+
+function focusComment(postId){
+
+  const input =
+    document.getElementById(
+      "commentInput-"+postId
+    );
+
+  if(input){
+
+    input.focus();
+
+    input.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+  }
+
+}
+
+
+/* =========================================
+   SECURITY: HTML ESCAPE
+========================================= */
+
+function escapeHTML(value){
+
+  return String(value)
+
+    .replaceAll("&","&amp;")
+
+    .replaceAll("<","&lt;")
+
+    .replaceAll(">","&gt;")
+
+    .replaceAll('"',"&quot;")
+
+    .replaceAll("'","&#039;");
+
+}
+
 </script>
+
 </body>
 </html>
