@@ -1,603 +1,1202 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Cyber Sentinel Bangladesh</title>
 
 <style>
 *{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  margin:0;
-  background:#020806;
-  color:#eafff6;
-  font-family:Arial,sans-serif;
-  overflow-x:hidden;
+    min-height:100vh;
+    background:#020806;
+    color:#d9fff0;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
-/* Matrix background */
-body::before{
-  content:"01010110 11001001 00110101 10101010 01100101 01011010 11010010 00101101";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  opacity:.07;
-  color:#00ff88;
-  font-family:monospace;
-  font-size:28px;
-  line-height:1.8;
-  word-spacing:25px;
-  transform:rotate(-8deg) scale(1.3);
+/* MATRIX BACKGROUND */
+.matrix{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    overflow:hidden;
+    background:#020806;
 }
 
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:
-    radial-gradient(circle at 50% 20%,rgba(0,255,136,.14),transparent 35%),
-    linear-gradient(180deg,#00150e,#020806 60%,#000);
-  pointer-events:none;
+.matrix span{
+    position:absolute;
+    top:-100%;
+    color:rgba(0,255,136,.13);
+    font-family:monospace;
+    font-size:18px;
+    line-height:1.3;
+    white-space:pre;
+    animation:matrixFall linear infinite;
 }
 
-/* Header */
+.matrix span:nth-child(1){left:3%;animation-duration:14s}
+.matrix span:nth-child(2){left:10%;animation-duration:18s}
+.matrix span:nth-child(3){left:17%;animation-duration:13s}
+.matrix span:nth-child(4){left:24%;animation-duration:20s}
+.matrix span:nth-child(5){left:31%;animation-duration:16s}
+.matrix span:nth-child(6){left:38%;animation-duration:19s}
+.matrix span:nth-child(7){left:45%;animation-duration:14s}
+.matrix span:nth-child(8){left:52%;animation-duration:21s}
+.matrix span:nth-child(9){left:59%;animation-duration:15s}
+.matrix span:nth-child(10){left:66%;animation-duration:18s}
+.matrix span:nth-child(11){left:73%;animation-duration:13s}
+.matrix span:nth-child(12){left:80%;animation-duration:20s}
+.matrix span:nth-child(13){left:87%;animation-duration:16s}
+.matrix span:nth-child(14){left:94%;animation-duration:19s}
+
+@keyframes matrixFall{
+    from{
+        transform:translateY(-100vh);
+    }
+    to{
+        transform:translateY(220vh);
+    }
+}
+
+.glow{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+    radial-gradient(
+        circle at 50% 25%,
+        rgba(0,255,136,.13),
+        transparent 38%
+    );
+    pointer-events:none;
+}
+
+/* HEADER */
 header{
-  height:75px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 22px;
-  border-bottom:1px solid #073d29;
-  background:rgba(0,15,10,.9);
-  position:sticky;
-  top:0;
-  z-index:20;
-  backdrop-filter:blur(10px);
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    background:rgba(1,12,8,.94);
+    border-bottom:1px solid rgba(0,255,136,.25);
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(10px);
 }
 
 .logo{
-  color:#00ff88;
-  font-size:25px;
-  font-weight:800;
-  text-shadow:0 0 15px #00ff88;
+    color:#00ff88;
+    font-size:25px;
+    font-weight:bold;
+    text-shadow:0 0 12px rgba(0,255,136,.7);
 }
 
-.menu{
-  color:#00ff88;
-  font-size:28px;
-  cursor:pointer;
+.menu-btn{
+    width:42px;
+    height:42px;
+    border:1px solid rgba(0,255,136,.3);
+    background:rgba(0,255,136,.05);
+    color:#00ff88;
+    border-radius:10px;
+    font-size:24px;
+    cursor:pointer;
 }
 
-/* Hero */
+/* MENU */
+.menu-box{
+    display:none;
+    position:fixed;
+    right:18px;
+    top:82px;
+    width:210px;
+    background:#04140d;
+    border:1px solid #08734a;
+    border-radius:14px;
+    padding:10px;
+    z-index:200;
+    box-shadow:0 15px 40px #000;
+}
+
+.menu-box.show{
+    display:block;
+}
+
+.menu-box button{
+    width:100%;
+    text-align:left;
+    background:transparent;
+    color:#b9ffe0;
+    border:0;
+    padding:13px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.menu-box button:hover{
+    background:rgba(0,255,136,.08);
+    color:#00ff88;
+}
+
+/* HERO */
 .hero{
-  min-height:480px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:60px 20px;
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 20px;
 }
 
 .hero h1{
-  margin:0;
-  font-size:clamp(42px,10vw,80px);
-  line-height:1.05;
-  color:#00ff88;
-  text-shadow:
-    0 0 10px #00ff88,
-    0 0 30px rgba(0,255,136,.6);
+    color:#00ff88;
+    font-size:clamp(45px,9vw,78px);
+    line-height:1.05;
+    text-shadow:
+        0 0 10px #00ff88,
+        0 0 30px rgba(0,255,136,.5);
 }
 
 .hero-line{
-  width:190px;
-  height:3px;
-  background:#00ff88;
-  box-shadow:0 0 18px #00ff88;
-  margin:35px auto 0;
+    width:150px;
+    height:2px;
+    margin:30px auto 0;
+    background:#00ff88;
+    box-shadow:0 0 15px #00ff88;
 }
 
-/* Main */
+/* MAIN */
 .container{
-  width:min(1000px,92%);
-  margin:auto;
+    width:min(1000px,92%);
+    margin:auto;
 }
 
 .section-title{
-  text-align:center;
-  color:#00ff88;
-  font-size:30px;
-  margin:40px 0 22px;
-  text-shadow:0 0 12px rgba(0,255,136,.5);
+    text-align:center;
+    color:#00ff88;
+    font-size:29px;
+    margin:30px 0 20px;
+    text-shadow:0 0 10px rgba(0,255,136,.4);
 }
 
+/* TOOL GRID */
+.tool-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.tool{
+    min-height:155px;
+    padding:20px;
+    background:rgba(3,20,13,.93);
+    border:1px solid rgba(0,255,136,.22);
+    border-radius:18px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tool:hover{
+    transform:translateY(-3px);
+    border-color:#00ff88;
+    box-shadow:0 10px 30px rgba(0,255,136,.1);
+}
+
+.tool-icon{
+    width:45px;
+    height:45px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:rgba(0,255,136,.07);
+    border:1px solid rgba(0,255,136,.25);
+    color:#00ff88;
+    font-size:23px;
+    margin-bottom:13px;
+}
+
+.tool h3{
+    color:#eafff6;
+    margin-bottom:6px;
+}
+
+.tool p{
+    color:#75998a;
+    font-size:13px;
+}
+
+/* CARD */
 .card{
-  background:rgba(2,20,13,.88);
-  border:1px solid #075538;
-  border-radius:20px;
-  padding:22px;
-  margin:18px 0;
-  box-shadow:0 0 25px rgba(0,255,136,.06);
+    background:rgba(3,20,13,.94);
+    border:1px solid rgba(0,255,136,.22);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:18px;
 }
 
 .card h3{
-  color:#00ff88;
-  margin-top:0;
+    color:#00ff88;
+    margin-bottom:15px;
 }
 
-textarea,
-input[type="text"],
-input[type="url"]{
-  width:100%;
-  background:#020b07;
-  border:1px solid #09633d;
-  border-radius:12px;
-  padding:15px;
-  color:#fff;
-  outline:none;
-  font-size:16px;
+/* INPUT */
+input,
+textarea{
+    width:100%;
+    background:#020a06;
+    color:#eafff6;
+    border:1px solid #075c3b;
+    border-radius:11px;
+    padding:13px;
+    outline:none;
+    font-size:15px;
 }
 
 textarea{
-  min-height:150px;
-  resize:vertical;
+    min-height:150px;
+    resize:vertical;
 }
 
 input:focus,
 textarea:focus{
-  border-color:#00ff88;
-  box-shadow:0 0 12px rgba(0,255,136,.2);
+    border-color:#00ff88;
+    box-shadow:0 0 12px rgba(0,255,136,.12);
 }
 
-button{
-  border:0;
-  border-radius:12px;
-  padding:13px 20px;
-  margin:8px 5px 0 0;
-  background:#00f587;
-  color:#00170d;
-  font-size:15px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 0 15px rgba(0,255,136,.3);
+/* BUTTON */
+.btn{
+    background:#00ff88;
+    color:#00150b;
+    border:0;
+    border-radius:10px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
 }
 
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 0 25px rgba(0,255,136,.55);
+.btn:hover{
+    box-shadow:0 0 20px rgba(0,255,136,.45);
 }
 
-button.secondary{
-  background:#062b1d;
-  color:#00ff88;
-  border:1px solid #087148;
-  box-shadow:none;
+.btn.secondary{
+    background:#062c1e;
+    color:#00ff88;
+    border:1px solid #08734a;
 }
 
-button.danger{
-  background:#351014;
-  color:#ff9ca8;
-  border:1px solid #72222d;
-  box-shadow:none;
+.btn.danger{
+    background:#351117;
+    color:#ff9baa;
+    border:1px solid #722330;
 }
 
-/* Notes */
+/* NOTES */
 .note{
-  border:1px solid #075538;
-  background:#03150e;
-  padding:18px;
-  border-radius:16px;
-  margin-top:15px;
+    background:#03150e;
+    border:1px solid #075538;
+    border-radius:15px;
+    padding:17px;
+    margin-bottom:14px;
 }
 
 .note-title{
-  color:#00ff88;
-  font-size:19px;
-  font-weight:bold;
+    color:#00ff88;
+    font-size:18px;
+    font-weight:bold;
 }
 
 .note-date{
-  color:#7fa897;
-  font-size:12px;
-  float:right;
+    color:#658b7c;
+    font-size:11px;
+    margin-top:5px;
 }
 
-.note-body{
-  white-space:pre-wrap;
-  margin-top:12px;
-  color:#d9eee5;
-  line-height:1.6;
+.note-text{
+    color:#d5eee4;
+    white-space:pre-wrap;
+    line-height:1.6;
+    margin:12px 0;
 }
 
-/* Tools */
-.tool-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
+/* QR */
+.qr-area{
+    background:white;
+    min-height:220px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    margin-top:15px;
 }
 
-.tool-card{
-  min-height:230px;
+.qr-area canvas{
+    max-width:100%;
 }
 
-.qr-box{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:210px;
-  margin-top:18px;
-  background:#fff;
-  border-radius:15px;
-  padding:15px;
-}
-
-#qrCanvas{
-  max-width:100%;
-}
-
+/* IMAGE PREVIEW */
 .preview{
-  max-width:100%;
-  max-height:220px;
-  border-radius:14px;
-  margin-top:15px;
-  display:none;
+    max-width:100%;
+    max-height:220px;
+    display:none;
+    margin-top:15px;
+    border-radius:12px;
 }
 
-/* Footer */
-footer{
-  text-align:center;
-  padding:45px 15px;
-  color:#55766a;
-  margin-top:50px;
-  border-top:1px solid #073d29;
-}
-
-/* Mobile */
-@media(max-width:700px){
-  header{
-    height:65px;
-  }
-
-  .logo{
-    font-size:20px;
-  }
-
-  .hero{
-    min-height:430px;
-  }
-
-  .hero h1{
-    font-size:46px;
-  }
-
-  .tool-grid{
-    grid-template-columns:1fr;
-  }
-
-  .card{
-    padding:17px;
-  }
-}
-
-/* Print PDF */
-@media print{
-  body{
-    background:#fff;
-    color:#000;
-  }
-
-  body::before,
-  body::after,
-  header,
-  footer,
-  .no-print{
-    display:none!important;
-  }
-
-  #pdfArea{
-    display:block!important;
-    color:#000;
-    background:#fff;
+/* MODAL */
+.modal-bg{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
     padding:20px;
-  }
+}
+
+.modal-bg.show{
+    display:flex;
+}
+
+.modal{
+    width:min(600px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#04140d;
+    border:1px solid #08734a;
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 20px 70px #000;
+}
+
+.modal h2{
+    color:#00ff88;
+    margin-bottom:18px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    color:#537568;
+    border-top:1px solid #073b29;
+    margin-top:50px;
+    padding:35px 15px;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+    header{
+        height:65px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .hero{
+        min-height:420px;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .tool-grid{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<div class="matrix">
+    <span>01010101<br>CYBER<br>10101010<br>SECURITY</span>
+    <span>10101010<br>NETWORK<br>01010101<br>CSB</span>
+    <span>CYBER<br>010101<br>SENTINEL</span>
+    <span>10101010<br>ETHICAL<br>01010101</span>
+    <span>CSB<br>010101<br>BD</span>
+    <span>10101010<br>SECURITY</span>
+    <span>01010101<br>CYBER</span>
+    <span>10101010<br>CSB</span>
+    <span>SECURITY<br>01010101</span>
+    <span>CYBER<br>10101010</span>
+    <span>CSB<br>01010101</span>
+    <span>NETWORK<br>10101010</span>
+    <span>01010101<br>CYBER</span>
+    <span>SECURITY<br>10101010</span>
+</div>
+
+<div class="glow"></div>
+
 <header>
-  <div class="logo">🛡️ CSB</div>
-  <div class="menu">⋮</div>
+
+    <div class="logo">
+        🛡️ CSB
+    </div>
+
+    <button
+        class="menu-btn"
+        onclick="toggleMenu()">
+        ☰
+    </button>
+
 </header>
 
+<div
+    id="menuBox"
+    class="menu-box">
+
+    <button onclick="goTo('tools')">
+        🧰 Tools
+    </button>
+
+    <button onclick="goTo('notes')">
+        📝 My Notes
+    </button>
+
+    <button onclick="goTo('links')">
+        🔗 Useful Links
+    </button>
+
+</div>
+
+
 <section class="hero">
-  <div>
-    <h1>Cyber Sentinel<br>Bangladesh</h1>
-    <div class="hero-line"></div>
-  </div>
+
+    <div>
+
+        <h1>
+            Cyber Sentinel<br>
+            Bangladesh
+        </h1>
+
+        <div class="hero-line"></div>
+
+    </div>
+
 </section>
+
 
 <main class="container">
 
+<!-- TOOLS -->
+
+<section id="tools">
+
+<h2 class="section-title">
+    Cyber Tools
+</h2>
+
+<div class="tool-grid">
+
+    <div
+        class="tool"
+        onclick="openTool('notes')">
+
+        <div class="tool-icon">
+            ✎
+        </div>
+
+        <h3>
+            Notes
+        </h3>
+
+        <p>
+            যেকোনো লেখা Save, Edit ও Delete করুন।
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool"
+        onclick="openTool('pdf')">
+
+        <div class="tool-icon">
+            ▣
+        </div>
+
+        <h3>
+            Text → PDF
+        </h3>
+
+        <p>
+            যেকোনো লেখা PDF হিসেবে Save করুন।
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool"
+        onclick="openTool('qr')">
+
+        <div class="tool-icon">
+            ▦
+        </div>
+
+        <h3>
+            Text → QR
+        </h3>
+
+        <p>
+            Text অথবা URL থেকে QR তৈরি করুন।
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool"
+        onclick="openTool('imageqr')">
+
+        <div class="tool-icon">
+            🖼️
+        </div>
+
+        <h3>
+            Image → QR
+        </h3>
+
+        <p>
+            ছোট image থেকে QR তৈরি করার চেষ্টা করুন।
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool"
+        onclick="openTool('ip')">
+
+        <div class="tool-icon">
+            ◎
+        </div>
+
+        <h3>
+            My IP Check
+        </h3>
+
+        <p>
+            নিজের public IP check করুন।
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool"
+        onclick="openTool('unblock')">
+
+        <div class="tool-icon">
+            ⌁
+        </div>
+
+        <h3>
+            IP Unblock
+        </h3>
+
+        <p>
+            IP unblock guide ও link copy।
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
 <!-- NOTES -->
-<h2 class="section-title">My Notes</h2>
+
+<section id="notes">
+
+<h2 class="section-title">
+    My Notes
+</h2>
 
 <div class="card">
-  <h3>📝 নতুন Note</h3>
 
-  <input id="noteTitle"
-         type="text"
-         placeholder="Note title">
+    <h3>
+        📝 Write a Note
+    </h3>
 
-  <br><br>
+    <input
+        id="noteTitle"
+        type="text"
+        placeholder="Note title">
 
-  <textarea id="noteText"
-            placeholder="যেকোনো লেখা এখানে লিখুন..."></textarea>
+    <br><br>
 
-  <br>
+    <textarea
+        id="noteBody"
+        placeholder="যেকোনো লেখা এখানে লিখুন..."></textarea>
 
-  <button onclick="saveNote()">Save Note</button>
-  <button class="secondary" onclick="clearNoteForm()">Clear</button>
+    <div>
+
+        <button
+            class="btn"
+            onclick="saveNote()">
+
+            Save Note
+
+        </button>
+
+        <button
+            class="btn secondary"
+            onclick="clearNote()">
+
+            Clear
+
+        </button>
+
+    </div>
+
 </div>
 
 <div id="notesList"></div>
 
+</section>
 
-<!-- PDF TOOL -->
-<h2 class="section-title">PDF Tool</h2>
+
+<!-- PDF -->
+
+<section id="pdf">
+
+<h2 class="section-title">
+    Text → PDF
+</h2>
 
 <div class="card">
-  <h3>📄 যেকোনো লেখা → PDF</h3>
 
-  <textarea id="pdfText"
-            placeholder="এখানে যেকোনো লেখা লিখুন..."></textarea>
+    <h3>
+        📄 PDF Generator
+    </h3>
 
-  <br>
+    <input
+        id="pdfTitle"
+        type="text"
+        placeholder="PDF title">
 
-  <button onclick="makePDF()">Create / Save PDF</button>
-</div>
+    <br><br>
 
-<div id="pdfArea" style="display:none;"></div>
-
-
-<!-- QR TOOLS -->
-<h2 class="section-title">QR Tools</h2>
-
-<div class="tool-grid">
-
-  <!-- TEXT QR -->
-  <div class="card tool-card">
-    <h3>🔳 Text / URL → QR</h3>
-
-    <input id="qrText"
-           type="text"
-           placeholder="Text অথবা URL লিখুন">
+    <textarea
+        id="pdfBody"
+        placeholder="PDF-এর লেখা এখানে লিখুন..."></textarea>
 
     <br>
 
-    <button onclick="makeTextQR()">Generate QR</button>
-    <button class="secondary" onclick="downloadQR()">
-      Download QR
+    <button
+        class="btn"
+        onclick="createPDF()">
+
+        Create PDF
+
     </button>
 
-    <div class="qr-box">
-      <canvas id="qrCanvas"></canvas>
-    </div>
-  </div>
+</div>
+
+</section>
 
 
-  <!-- IMAGE QR -->
-  <div class="card tool-card">
-    <h3>🖼️ Image → QR</h3>
+<!-- QR -->
 
-    <p style="color:#8eada1;font-size:14px;">
-      ছোট image নির্বাচন করুন। Image-এর data QR code-এ রাখার চেষ্টা করা হবে।
-    </p>
+<section id="qr">
 
-    <input id="imageInput"
-           type="file"
-           accept="image/*">
+<h2 class="section-title">
+    Text → QR
+</h2>
 
-    <img id="imagePreview"
-         class="preview">
+<div class="card">
+
+    <h3>
+        🔳 QR Generator
+    </h3>
+
+    <input
+        id="qrText"
+        type="text"
+        placeholder="Text অথবা URL লিখুন">
 
     <br>
 
-    <button onclick="imageToQR()">Generate Image QR</button>
+    <button
+        class="btn"
+        onclick="createQR()">
 
-    <div class="qr-box">
-      <canvas id="imageQRCanvas"></canvas>
+        Generate QR
+
+    </button>
+
+    <button
+        class="btn secondary"
+        onclick="downloadQR()">
+
+        Download QR
+
+    </button>
+
+    <div class="qr-area">
+
+        <canvas id="qrCanvas"></canvas>
+
     </div>
-  </div>
 
 </div>
 
+</section>
 
-<!-- IP / HELPFUL LINKS -->
-<h2 class="section-title">Useful Tools</h2>
+
+<!-- IMAGE QR -->
+
+<section id="imageqr">
+
+<h2 class="section-title">
+    Image → QR
+</h2>
 
 <div class="card">
-  <h3>🌐 My IP Check</h3>
 
-  <p style="color:#9bb9ac;">
-    নিজের public IP দেখার জন্য নিচের official service ব্যবহার করুন।
-  </p>
+    <h3>
+        🖼️ Image QR
+    </h3>
 
-  <button onclick="openLink('https://whoer.net/')">
-    Open My IP Checker
-  </button>
+    <input
+        id="imageInput"
+        type="file"
+        accept="image/*">
+
+    <img
+        id="imagePreview"
+        class="preview">
+
+    <br>
+
+    <button
+        class="btn"
+        onclick="createImageQR()">
+
+        Generate Image QR
+
+    </button>
+
+    <div class="qr-area">
+
+        <canvas id="imageQRCanvas"></canvas>
+
+    </div>
+
+    <p style="color:#77988c;font-size:12px;margin-top:10px">
+        বড় image QR-এর ভিতরে রাখা সম্ভব নাও হতে পারে।
+        ছোট image ব্যবহার করুন।
+    </p>
+
 </div>
+
+</section>
+
+
+<!-- LINKS -->
+
+<section id="links">
+
+<h2 class="section-title">
+    Useful Links
+</h2>
+
 
 <div class="card">
-  <h3>🔓 IP Unblock Guide</h3>
 
-  <p style="color:#9bb9ac;">
-    UpdraftPlus-এর IP unblock সম্পর্কিত guide।
-  </p>
+    <h3>
+        🌐 My IP Check
+    </h3>
 
-  <button onclick="copyLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
-    Copy Link
-  </button>
+    <p style="color:#86a99a;line-height:1.6">
+        Whoer website ব্যবহার করে নিজের public IP
+        এবং connection information দেখতে পারবেন।
+    </p>
 
-  <button class="secondary"
-          onclick="openLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
-    Open Guide
-  </button>
+    <button
+        class="btn"
+        onclick="openLink('https://whoer.net/')">
+
+        Open IP Checker
+
+    </button>
+
+    <button
+        class="btn secondary"
+        onclick="copyLink('https://whoer.net/')">
+
+        Copy Link
+
+    </button>
+
 </div>
+
+
+<div class="card">
+
+    <h3>
+        🔓 IP Unblock Guide
+    </h3>
+
+    <p style="color:#86a99a;line-height:1.6">
+        UpdraftPlus-এর official IP unblock guide।
+    </p>
+
+    <button
+        class="btn"
+        onclick="openLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
+
+        Open Guide
+
+    </button>
+
+    <button
+        class="btn secondary"
+        onclick="copyLink('https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/')">
+
+        Copy Link
+
+    </button>
+
+</div>
+
+</section>
 
 </main>
 
+
 <footer>
-  Cyber Sentinel Bangladesh
+
+    Cyber Sentinel Bangladesh
+
 </footer>
 
 
-<!-- QR LIBRARY -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<!-- MODAL -->
+
+<div
+    id="modalBg"
+    class="modal-bg">
+
+    <div class="modal">
+
+        <h2 id="modalTitle">
+            Tool
+        </h2>
+
+        <div id="modalContent"></div>
+
+        <div class="modal-actions">
+
+            <button
+                class="btn secondary"
+                onclick="closeModal()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <script>
+
+/* =========================
+   MENU
+========================= */
+
+function toggleMenu(){
+
+    document
+        .getElementById("menuBox")
+        .classList
+        .toggle("show");
+
+}
+
+
+function goTo(id){
+
+    document
+        .getElementById(id)
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+    document
+        .getElementById("menuBox")
+        .classList
+        .remove("show");
+
+}
+
 
 /* =========================
    NOTES
 ========================= */
 
-let editingIndex = -1;
+let editIndex=-1;
+
 
 function getNotes(){
-  return JSON.parse(localStorage.getItem("csb_notes") || "[]");
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem("csb_notes") || "[]"
+        );
+
+    }catch(error){
+
+        return [];
+
+    }
+
 }
+
 
 function saveNote(){
 
-  const title =
-    document.getElementById("noteTitle").value.trim();
+    const title=
+        document
+        .getElementById("noteTitle")
+        .value
+        .trim();
 
-  const text =
-    document.getElementById("noteText").value.trim();
+    const body=
+        document
+        .getElementById("noteBody")
+        .value
+        .trim();
 
-  if(!title && !text){
-    alert("আগে কিছু লিখুন।");
-    return;
-  }
 
-  const notes = getNotes();
+    if(!title && !body){
 
-  const note = {
-    title: title || "Untitled Note",
-    text: text,
-    date: new Date().toLocaleString()
-  };
+        alert("কিছু লিখুন।");
 
-  if(editingIndex === -1){
-    notes.unshift(note);
-  }else{
-    notes[editingIndex] = note;
-    editingIndex = -1;
-  }
+        return;
 
-  localStorage.setItem("csb_notes",JSON.stringify(notes));
+    }
 
-  clearNoteForm();
-  renderNotes();
+
+    const notes=getNotes();
+
+
+    const note={
+        title:title || "Untitled",
+        body:body,
+        date:new Date().toLocaleString()
+    };
+
+
+    if(editIndex===-1){
+
+        notes.unshift(note);
+
+    }else{
+
+        notes[editIndex]=note;
+
+        editIndex=-1;
+
+    }
+
+
+    localStorage.setItem(
+        "csb_notes",
+        JSON.stringify(notes)
+    );
+
+
+    clearNote();
+
+    renderNotes();
+
+    alert("Note saved successfully!");
+
 }
 
-function clearNoteForm(){
-
-  document.getElementById("noteTitle").value="";
-  document.getElementById("noteText").value="";
-  editingIndex=-1;
-}
-
-function editNote(index){
-
-  const notes=getNotes();
-  const note=notes[index];
-
-  document.getElementById("noteTitle").value=note.title;
-  document.getElementById("noteText").value=note.text;
-
-  editingIndex=index;
-
-  window.scrollTo({
-    top:document.getElementById("noteTitle").offsetTop-100,
-    behavior:"smooth"
-  });
-}
-
-function deleteNote(index){
-
-  if(!confirm("এই Note delete করবেন?")){
-    return;
-  }
-
-  const notes=getNotes();
-  notes.splice(index,1);
-
-  localStorage.setItem("csb_notes",JSON.stringify(notes));
-
-  renderNotes();
-}
 
 function renderNotes(){
 
-  const box=document.getElementById("notesList");
-  const notes=getNotes();
+    const box=
+        document.getElementById("notesList");
 
-  box.innerHTML="";
+    const notes=getNotes();
 
-  if(notes.length===0){
 
-    box.innerHTML=`
-      <div class="card">
-        <p style="color:#729487;text-align:center;">
-          এখনো কোনো Note নেই।
-        </p>
-      </div>
-    `;
+    box.innerHTML="";
 
-    return;
-  }
 
-  notes.forEach((note,index)=>{
+    if(notes.length===0){
+
+        box.innerHTML=`
+            <div class="card">
+                <p style="text-align:center;color:#688c7e">
+                    No notes saved yet.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    notes.forEach((note,index)=>{
+
+        const div=document.createElement("div");
+
+        div.className="note";
+
+
+        div.innerHTML=`
+
+            <div class="note-title">
+                ${escapeHTML(note.title)}
+            </div>
+
+            <div class="note-date">
+                ${escapeHTML(note.date)}
+            </div>
+
+            <div class="note-text">
+                ${escapeHTML(note.body)}
+            </div>
+
+            <button
+                class="btn secondary"
+                onclick="editNote(${index})">
+
+                Edit
+
+            </button>
+
+            <button
+                class="btn danger"
+                onclick="deleteNote(${index})">
+
+                Delete
+
+            </button>
+
+        `;
+
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+function editNote(index){
+
+    const notes=getNotes();
+
+    const note=notes[index];
+
+
+    document
+        .getElementById("noteTitle")
+        .value=note.title;
+
+    document
+        .getElementById("noteBody")
+        .value=note.body;
+
+
+    editIndex=index;
+
+
+    document
+        .getElementById("notes")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+function deleteNote(index){
+
+    if(
+        !confirm(
+            "এই note delete করতে চান?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const notes=getNotes();
+
+    notes.splice(index,1);
+
+
+    localStorage.setItem(
+        "csb_notes",
+        JSON.stringify(notes)
+    );
+
+
+    renderNotes();
+
+}
+
+
+function clearNote(){
+
+    document
+        .getElementById("noteTitle")
+        .value="";
+
+    document
+        .getElementById("noteBody")
+        .value="";
+
+    editIndex=-1;
+
+}
+
+
+function escapeHTML(value){
 
     const div=document.createElement("div");
-    div.className="note";
 
-    div.innerHTML=`
-      <span class="note-date">${escapeHTML(note.date)}</span>
-      <div class="note-title">${escapeHTML(note.title)}</div>
-      <div class="note-body">${escapeHTML(note.text)}</div>
+    div.textContent=value;
 
-      <button class="secondary"
-              onclick="editNote(${index})">
-        Edit
-      </button>
+    return div.innerHTML;
 
-      <button class="danger"
-              onclick="deleteNote(${index})">
-        Delete
-      </button>
-    `;
-
-    box.appendChild(div);
-  });
 }
 
-function escapeHTML(text){
-
-  const div=document.createElement("div");
-  div.textContent=text;
-
-  return div.innerHTML;
-}
 
 renderNotes();
 
@@ -606,75 +1205,218 @@ renderNotes();
    PDF
 ========================= */
 
-function makePDF(){
+function createPDF(){
 
-  const text=
-    document.getElementById("pdfText").value.trim();
+    const title=
+        document
+        .getElementById("pdfTitle")
+        .value
+        .trim() ||
+        "Cyber Sentinel Bangladesh";
 
-  if(!text){
-    alert("আগে PDF-এর জন্য লেখা লিখুন।");
-    return;
-  }
+    const body=
+        document
+        .getElementById("pdfBody")
+        .value
+        .trim();
 
-  const area=document.getElementById("pdfArea");
 
-  area.innerHTML=`
-    <h1>Cyber Sentinel Bangladesh</h1>
-    <hr>
-    <div style="white-space:pre-wrap;font-size:16px;line-height:1.7;">
-      ${escapeHTML(text)}
-    </div>
-  `;
+    if(!body){
 
-  area.style.display="block";
+        alert("PDF-এর জন্য কিছু লেখা দিন।");
 
-  window.print();
+        return;
 
-  setTimeout(()=>{
-    area.style.display="none";
-  },1000);
+    }
+
+
+    const win=window.open(
+        "",
+        "_blank"
+    );
+
+
+    if(!win){
+
+        alert(
+            "Popup blocked হয়েছে। Browser-এর popup allow করুন।"
+        );
+
+        return;
+
+    }
+
+
+    win.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                ${escapeHTML(title)}
+            </title>
+
+            <style>
+
+                body{
+                    font-family:Arial,sans-serif;
+                    padding:40px;
+                    color:#111;
+                }
+
+                h1{
+                    margin-bottom:25px;
+                }
+
+                .content{
+                    white-space:pre-wrap;
+                    line-height:1.7;
+                    font-size:15px;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>
+                ${escapeHTML(title)}
+            </h1>
+
+            <div class="content">
+                ${escapeHTML(body)}
+            </div>
+
+            <script>
+
+                window.onload=function(){
+
+                    window.print();
+
+                };
+
+            <\/script>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    win.document.close();
+
 }
 
 
 /* =========================
-   TEXT QR
+   QR
 ========================= */
 
-let textQR=null;
+let qrCanvas=
+    document.getElementById(
+        "qrCanvas"
+    );
 
-function makeTextQR(){
 
-  const text=
-    document.getElementById("qrText").value.trim();
+let qrContext=
+    qrCanvas.getContext("2d");
 
-  if(!text){
-    alert("Text অথবা URL লিখুন।");
-    return;
-  }
 
-  textQR=new QRious({
-    element:document.getElementById("qrCanvas"),
-    value:text,
-    size:190,
-    level:"H"
-  });
+function createQR(){
+
+    const text=
+        document
+        .getElementById("qrText")
+        .value
+        .trim();
+
+
+    if(!text){
+
+        alert(
+            "Text অথবা URL লিখুন।"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Simple QR generator using
+       external library loaded below.
+    */
+
+    if(
+        typeof QRious ===
+        "undefined"
+    ){
+
+        alert(
+            "QR library load হয়নি। Internet connection check করুন।"
+        );
+
+        return;
+
+    }
+
+
+    new QRious({
+
+        element:qrCanvas,
+
+        value:text,
+
+        size:220,
+
+        level:"H"
+
+    });
+
 }
+
 
 function downloadQR(){
 
-  if(!textQR){
-    alert("আগে QR তৈরি করুন।");
-    return;
-  }
+    const text=
+        document
+        .getElementById("qrText")
+        .value
+        .trim();
 
-  const canvas=document.getElementById("qrCanvas");
 
-  const link=document.createElement("a");
+    if(!text){
 
-  link.download="csb-qr.png";
-  link.href=canvas.toDataURL("image/png");
+        alert(
+            "আগে QR তৈরি করুন।"
+        );
 
-  link.click();
+        return;
+
+    }
+
+
+    const link=
+        document.createElement("a");
+
+
+    link.download=
+        "cyber-sentinel-qr.png";
+
+
+    link.href=
+        qrCanvas.toDataURL(
+            "image/png"
+        );
+
+
+    link.click();
+
 }
 
 
@@ -682,68 +1424,110 @@ function downloadQR(){
    IMAGE QR
 ========================= */
 
-let imageQR=null;
+let selectedImage=null;
+
 
 document
-.getElementById("imageInput")
-.addEventListener("change",function(){
+    .getElementById("imageInput")
+    .addEventListener(
+        "change",
+        function(){
 
-  const file=this.files[0];
+            const file=
+                this.files[0];
 
-  if(!file)return;
+            if(!file){
 
-  const reader=new FileReader();
+                return;
 
-  reader.onload=function(e){
-
-    const img=document.getElementById("imagePreview");
-
-    img.src=e.target.result;
-    img.style.display="block";
-  };
-
-  reader.readAsDataURL(file);
-});
+            }
 
 
-function imageToQR(){
+            const reader=
+                new FileReader();
 
-  const file=
-    document.getElementById("imageInput").files[0];
 
-  if(!file){
-    alert("আগে একটি image নির্বাচন করুন।");
-    return;
-  }
+            reader.onload=function(e){
 
-  const reader=new FileReader();
+                selectedImage=
+                    e.target.result;
 
-  reader.onload=function(e){
 
-    const data=e.target.result;
+                const preview=
+                    document
+                    .getElementById(
+                        "imagePreview"
+                    );
+
+
+                preview.src=
+                    selectedImage;
+
+                preview.style.display=
+                    "block";
+
+            };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+function createImageQR(){
+
+    if(!selectedImage){
+
+        alert(
+            "আগে একটি image নির্বাচন করুন।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        typeof QRious ===
+        "undefined"
+    ){
+
+        alert(
+            "QR library load হয়নি।"
+        );
+
+        return;
+
+    }
+
 
     try{
 
-      imageQR=new QRious({
-        element:document.getElementById("imageQRCanvas"),
-        value:data,
-        size:190,
-        level:"L"
-      });
+        new QRious({
 
-      alert(
-        "QR তৈরি হয়েছে। Image বড় হলে QR-এর capacity সীমার কারণে কাজ নাও করতে পারে।"
-      );
+            element:
+                document.getElementById(
+                    "imageQRCanvas"
+                ),
+
+            value:selectedImage,
+
+            size:220,
+
+            level:"L"
+
+        });
+
 
     }catch(error){
 
-      alert(
-        "Image-এর data অনেক বড়। ছোট image ব্যবহার করুন।"
-      );
-    }
-  };
+        alert(
+            "Image-এর data অনেক বড়। ছোট image ব্যবহার করুন।"
+        );
 
-  reader.readAsDataURL(file);
+    }
+
 }
 
 
@@ -752,21 +1536,171 @@ function imageToQR(){
 ========================= */
 
 function openLink(url){
-  window.open(url,"_blank");
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
 }
+
 
 function copyLink(url){
 
-  navigator.clipboard.writeText(url)
-  .then(()=>{
-    alert("Link copied!");
-  })
-  .catch(()=>{
-    prompt("এই link copy করুন:",url);
-  });
+    if(
+        navigator.clipboard
+    ){
+
+        navigator.clipboard
+            .writeText(url)
+            .then(()=>{
+
+                alert(
+                    "Link copied!"
+                );
+
+            })
+            .catch(()=>{
+
+                fallbackCopy(url);
+
+            });
+
+    }else{
+
+        fallbackCopy(url);
+
+    }
+
+}
+
+
+function fallbackCopy(url){
+
+    const input=
+        document.createElement(
+            "input"
+        );
+
+    input.value=url;
+
+    document.body.appendChild(
+        input
+    );
+
+    input.select();
+
+    document.execCommand(
+        "copy"
+    );
+
+    input.remove();
+
+    alert(
+        "Link copied!"
+    );
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function openTool(type){
+
+    if(type==="notes"){
+
+        document
+            .getElementById("notes")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+        return;
+
+    }
+
+
+    if(type==="pdf"){
+
+        document
+            .getElementById("pdf")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+        return;
+
+    }
+
+
+    if(type==="qr"){
+
+        document
+            .getElementById("qr")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+        return;
+
+    }
+
+
+    if(type==="imageqr"){
+
+        document
+            .getElementById("imageqr")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+        return;
+
+    }
+
+
+    if(type==="ip"){
+
+        openLink(
+            "https://whoer.net/"
+        );
+
+        return;
+
+    }
+
+
+    if(type==="unblock"){
+
+        openLink(
+            "https://updraftplus.com/support/updraftplus-ip-unblock-how-to-regain-access-if-your-ip-is-blocked/"
+        );
+
+        return;
+
+    }
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList
+        .remove("show");
+
 }
 
 </script>
+
+
+<!-- QR LIBRARY -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 </body>
 </html>
